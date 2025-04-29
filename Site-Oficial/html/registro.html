@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/login-registro.css">
+  <script src="../javascript/login-reistro.js"></script>
+  <link href='https://fonts.googleapis.com/css?family=Jost' rel='stylesheet'>
+  <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+  <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet'>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
+  <title>Faça seu login!</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="img-bg">
+    </div>
+    <div class="coluna">
+
+      <div class="container-login">
+
+        <div class="buttom-back">
+          <a href="./login.html"><img src="../Imagens/Seta.png" alt="" class="img-g">
+          </a>
+          <h1>VOLTAR</h1>
+        </div>
+
+        <div class="card card-login">
+          <h2>Crie a sua conta!</h2>
+
+          <div class="formulario">
+
+            <div class="campo-registro">
+              <span id="span_nome">Nome:</span>
+              <input id="input_nome" type="text" placeholder="Digite seu nome"><br>
+              <div id="nomeCarac"></div>
+            </div>
+
+            <div class="campo-registro">
+              <span id="span_email">
+                <div id="div_email_verify" class="verify-text"></div>E-mail:
+              </span>
+              <input id="input_email" type="text" placeholder="Digite seu e-mail"><br>
+              <div id="emailCarac"></div>
+            </div>
+
+            <div class="campo-registro">
+              <span id="span_senha">
+                <div id="div_senha_verify" class="verify-text"></div>Senha: <br>
+                <!-- Senha deve conter caracteres especiais. ("!", "@", "#", "_", "-", ".") -->
+              </span>
+              <input id="input_senha" type="text" placeholder="Digite sua senha"><br>
+              <div id="senhaCarac"></div>
+            </div>
+
+            <div class="campo-registro">
+              <!-- <span id="span_cpf_cnpj">CPF ou CNPJ (APENAS NÚMEROS):</span> -->
+              <!-- <input maxlength="14" minlength="11" id="input_cpf_cnpj" type="text"
+                placeholder="Digite seu CPF/CNPJ"><br> -->
+              <div id="cpf_cnpjCarac"></div>
+            </div>
+
+            <div class="campo-registro">
+              <span id="span_telefone">Telefone:</span>
+              <input maxlength="11" minlength="10" id="input_telefone" type="text"
+                placeholder="Digite seu telefone ex:11912345678 "><br>
+              <div id="telefoneCarac"></div>
+            </div>
+            <div id="div_Login_Alert" class="verify-text"></div>
+
+            <button class="botao-registro" onclick="Verify_Variables()">Continuar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</body>
+
+</html>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js">
+
+</script>
+
+<script>
+
+  function Verify_Variables() {
+    var nome = input_nome.value;
+    var email = input_email.value;
+    var senha = input_senha.value;
+    var cpfCNPJ = input_cpf_cnpj.value;
+    var telefone = input_telefone.value;
+
+    if (nome == "" || email == "" || senha == "" || cpfCNPJ == "" || telefone == "") {
+      Toastify({
+      text: "Alert: Preencha todos os campos!",
+      duration: 3000,
+      style: {
+      background: "linear-gradient(to right, #FF8C00, #FF4500)",
+        },
+      }).showToast();
+    }
+    else if (!email.includes('@') || !email.includes('.')) {
+      emailCarac.innerHTML = `<span style="color: red;">* E-mail inválido. Deve conter "@" e ".". </span>`;
+      Toastify({
+      text: "Alert: Campos Inválidos! Deve conter @ e .",
+      duration: 3000,
+      style: {
+      background: "linear-gradient(to right, #FF8C00, #FF4500)",
+        },
+      }).showToast();
+    }
+    else if (email != email.toLowerCase()) {
+      emailCarac.innerHTML += `<span style="color: red;">* Apenas letras minúsculas. </span>`
+    }
+    else if (senha.length < 6 || senha.length > 12) {
+      Toastify({
+      text: "Alert: Campos Inválidos! Senha deve conter entre 6 e 12 caracteres",
+      duration: 3000,
+      style: {
+      background: "linear-gradient(to right, #FF8C00, #FF4500)",
+        },
+      }).showToast();
+    }
+    else if (!senha.includes('!') && !senha.includes('@') && !senha.includes('#') && !senha.includes('_') && !senha.includes('-') && !senha.includes('.')) {
+      senhaCarac.innerHTML = `<span style="color: red;">* Senha fraca. Senha deve conter caracteres especiais. ex: "!", "@", "#", "_", "-", "."</span>`;
+    }
+    else if (cpfCNPJ.length !== 11 && cpfCNPJ.length !== 14) {
+      Toastify({
+      text: "Alert: Campos Inválidos! CPF ou CNPJ inválido",
+      duration: 3000,
+      style: {
+      background: "linear-gradient(to right, #FF8C00, #FF4500)",
+        },
+      }).showToast();
+    }
+    else if (/[^0-9]/.test(cpfCNPJ)) {
+      Toastify({
+        
+      text: "Alert: Campos Inválidos! CPF ou CNPJ deve conter apenas números.",
+      duration: 3000,
+      style: {
+      background: "linear-gradient(to right, #FF8C00, #FF4500)",
+        },
+      }).showToast();
+    }
+    else if (/[^0-9]/.test(telefone)) {
+      Toastify({
+      text: "Alert: Campos inválidos. Apenas números.",
+      duration: 3000,
+      style: {
+      background: "linear-gradient(to right, #FF8C00, #FF4500)",
+        },
+      }).showToast();
+    }
+    else {
+      window.location.href = "./registro2.html";
+    }
+  }
+
+</script>
