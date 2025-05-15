@@ -1,60 +1,71 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../css/login-registro.css">
-  <script src="../javascript/login-reistro.js"></script>
-  <link href='https://fonts.googleapis.com/css?family=Jost' rel='stylesheet'>
-  <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
-  <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet'>
+  <script src="../javascript/login-registro.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Jost" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-  <title>Faça seu login!</title>
+  <title>Recuperar Senha</title>
 </head>
 
 <body>
   <div class="container">
     <div class="img-bg">
+      <!-- Imagem de fundo, se necessário -->
     </div>
+
     <div class="coluna">
       <div class="container-login">
 
         <div class="buttom-back">
           <a href="./login.html">
-            <img src="../Imagens/Seta.png" alt="" class="img-g">
+            <img src="../Imagens/Seta.png" alt="Voltar" class="img-g">
           </a>
-          <h1>VOLTAR</h1>
+          <h1>Voltar</h1>
         </div>
+
         <div class="card card-login">
-          <h2>Crie sua nova senha!</h2>
+          <h2>Crie sua nova senha</h2>
 
           <div class="formulario">
+
             <div class="campo-senha">
               <span>E-mail para recuperação de senha:</span>
-              <input id="input_email" type="text" placeholder="Digite seu e-mail"><br>
+              <input id="input_email" type="text" placeholder="Digite seu e-mail">
               <div id="msgEmail"></div>
             </div>
+
             <div class="campo-senha">
-              <span>Insira uma nova senha: <br> Senha deve conter caracteres especiais. ("!", "@", "#", "_", "-", ".")</span>
-              <input id="input_senha1" type="text" placeholder="Digite sua senha"><br>
+              <span>Insira uma nova senha:</span>
+              <input id="input_senha1" type="text" placeholder="Digite sua nova senha">
+              <small>Utilize ao menos um caractere especial (!, @, #, _, - ou .)</small>
               <div id="msgSenha"></div>
             </div>
+
             <div class="campo-senha">
-              <span>Repetir nova senha:</span>
-              <input id="input_senha2" type="text" placeholder="Digite sua senha"><br>
+              <span>Repita a nova senha:</span>
+              <input id="input_senha2" type="text" placeholder="Repita sua nova senha">
               <div id="msgNovaSenha"></div>
             </div>
-            <button onclick="registrar()" class="botao">Registrar</button><br>
+
+            <button onclick="registrar()" class="botao">Registrar</button>
             <div id="div_mensagem"></div>
+
           </div>
-
         </div>
+
       </div>
-
-
+    </div>
+  </div>
 </body>
+
 </html>
+
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js">
 
 </script>
