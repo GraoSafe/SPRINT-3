@@ -68,11 +68,13 @@
 
 </body> 
 </html>
+
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js">
 
 </script>
+
 <script>
-    var myChartInstance = null; // Variável global para armazenar a instância do gráfico
+    // var myChartInstance = null; // Variável global para armazenar a instância do gráfico
 
     function analisePerda() {
         var nomeEmpresa = document.getElementById("input_nome").value;
@@ -133,8 +135,6 @@
             <b> R$${perdaCorrigida.toLocaleString('pt-br', {minimumFractionDigits:2})}</b> </div>
         
         <div id="div_mensagem_ton" class="div_msg_ton"></div>
-        <div class="nome-grafico">GRÁFICO PERDA REAL/PERDA CORRIGIDA (Uso do Sensor)</div>
-        <div class="chart-container"><canvas id="myChart" class="main-font"></canvas></div> 
         <div class="info-box">
         A perda média de grãos por armazenamento inadequado, no Brasil, segundo a Companhia Nacional de Abastecimento
         (Conab/2023), é de <b>15%</b>. <br> <br>
@@ -155,51 +155,52 @@
             Perda Absoluta: <b>R$${perdaAbsoluta.toFixed(2)}</b>
         `;
         */
-        // Atualiza o gráfico com os novos dados
+        // // Atualiza o gráfico com os novos dados
         
-        updateChart(perdaReal, perdaCorrigida);
-        window.scrollBy({
-            top: 800, // Quantidade de pixels a rolar
-            behavior: "smooth" 
-        });
-        }
+        // updateChart(perdaReal, perdaCorrigida);
+        // window.scrollBy({
+        //     top: 800, // Quantidade de pixels a rolar
+        //     behavior: "smooth" 
+        // });
+        // }
     
 
-    function updateChart(perdaReal, perdaCorrigida) {
-        var ctx = document.getElementById('myChart').getContext('2d');
+    // function updateChart(perdaReal, perdaCorrigida) {
+    //     var ctx = document.getElementById('myChart').getContext('2d');
 
-        // Se já houver um gráfico desenhado, destrua-o antes de criar um novo
-        if (myChartInstance) {
-            myChartInstance.destroy();
-        }
+    //     // Se já houver um gráfico desenhado, destrua-o antes de criar um novo
+    //     if (myChartInstance) {
+    //         myChartInstance.destroy();
+    //     }
 
-        // Criar novo gráfico
-        myChartInstance = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Perda Real','Perda Corrigida'],
-                datasets: [{
-                    label: 'Perdas em R$',
-                    data: [perdaReal, perdaCorrigida],
-                    backgroundColor: ['rgb(253, 43, 86, 0.8)', 'rgba(75, 192, 192, 0.8)'],
-                    borderColor: ['rgba(255, 99, 132, 1)', 'rgba(75, 192, 192, 1)'],
-                    borderWidth: 1,
-                    barThickness: 100,
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        display: true
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-    }
+    //     // Criar novo gráfico
+    //     myChartInstance = new Chart(ctx, {
+    //         type: 'bar',
+    //         data: {
+    //             labels: ['Perda Real','Perda Corrigida'],
+    //             datasets: [{
+    //                 label: 'Perdas em R$',
+    //                 data: [perdaReal, perdaCorrigida],
+    //                 backgroundColor: ['rgb(253, 43, 86, 0.8)', 'rgba(75, 192, 192, 0.8)'],
+    //                 borderColor: ['rgba(255, 99, 132, 1)', 'rgba(75, 192, 192, 1)'],
+    //                 borderWidth: 1,
+    //                 barThickness: 100,
+    //             }]
+    //         },
+    //         options: {
+    //             responsive: true,
+    //             plugins: {
+    //                 legend: {
+    //                     display: true
+    //                 }
+    //             },
+    //             scales: {
+    //                 y: {
+    //                     beginAtZero: true
+    //                 }
+    //             }
+    //         }
+    //     });
+    //
+     }
 </script>
