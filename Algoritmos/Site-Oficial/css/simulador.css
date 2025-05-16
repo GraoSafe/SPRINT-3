@@ -49,7 +49,6 @@ body{
 
 .navbar a:hover {
     color: rgb(240, 91, 37);
-    font-size: 33px;
     transition: all 0.3s ease-in-out;
 }
 
@@ -148,6 +147,7 @@ justify-content: center;
     width: 30%;
     padding: 15px;
     font-size: 20px;
+    transition: 0.3s;
 
     border-top-right-radius: 25px;
     border-bottom-left-radius: 25px;
@@ -156,7 +156,7 @@ justify-content: center;
 
 .calc-button:hover {
     background-color: #DB6900;
-    transition: background-color 0.3s;
+    transition: 0.3s;
 }
 
 .onda {

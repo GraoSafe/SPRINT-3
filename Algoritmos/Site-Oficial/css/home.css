@@ -41,20 +41,16 @@ body {
 .login {
     background-color: #0A5436;
     position: absolute;
-    text-decoration: none;
     top: 35px;
     right: 85px;
-
-    height: fit-content;
-    width: fit-content;
-
     font-size: 25px;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    padding-left: 50px;
-    padding-right: 50px;
-    transition: background-color 0.3s;
+    padding: 0.8% 1%;
+    transition: 0.3s;
+
+    color: white;
+    font-weight: bolder;
 }
+
 .volta {
     background-color: rgb(78, 80, 77);
     position: absolute;
@@ -84,19 +80,13 @@ body {
     z-index: 2;
 }
 
-.login {
-    background-color: rgb(10, 84, 54);
-    color: white;
-    font-weight: bolder;
-}
-
 .login a{
     text-decoration: none;
 }
 
 .login-button:hover {
     background-color:  rgb(240, 91, 37);
-    transition: background-color 0.3s;
+    transition: 0.3s;
 }
 
 .navbar {
@@ -115,14 +105,15 @@ body {
     padding: 14px 20px;
     margin: 0 15px;
     padding-bottom: 0px;
+    transition: 0.3s;
 }
 
 .navbar a:hover {
     color: rgb(240, 91, 37);
+    transition: 0.3s;
 }
 
 .tsize:hover {
-    font-size: 33px;
     transition: all 0.3s ease-in-out;
 }
 
