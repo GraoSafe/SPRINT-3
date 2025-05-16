@@ -1,84 +1,79 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../css/login-registro.css">
-  <script src="../javascript/login-reistro.js"></script>
-  <link href='https://fonts.googleapis.com/css?family=Jost' rel='stylesheet'>
-  <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
-  <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet'>
+  <script src="../javascript/login-registro.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Jost" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 
-  <title>Faça seu login!</title>
+  <title>Crie sua conta!</title>
 </head>
 
 <body>
   <div class="container">
     <div class="img-bg">
+      <!-- Imagem decorativa ou de fundo, se aplicável -->
     </div>
-    <div class="coluna">
 
+    <div class="coluna">
       <div class="container-login">
 
         <div class="buttom-back">
-          <a href="./login.html"><img src="../Imagens/Seta.png" alt="" class="img-g">
+          <a href="./login.html">
+            <img src="../Imagens/Seta.png" alt="Voltar" class="img-g">
           </a>
-          <h1>VOLTAR</h1>
+          <h1>Voltar</h1>
         </div>
 
         <div class="card card-login">
-          <h2>Crie a sua conta!</h2>
+          <h2>Crie sua conta</h2>
 
           <div class="formulario">
 
             <div class="campo-registro">
               <span id="span_nome">Nome:</span>
-              <input id="input_nome" type="text" placeholder="Digite seu nome"><br>
+              <input id="input_nome" type="text" placeholder="Digite seu nome">
               <div id="nomeCarac"></div>
             </div>
 
             <div class="campo-registro">
-              <span id="span_email">
-                <div id="div_email_verify" class="verify-text"></div>E-mail:
-              </span>
-              <input id="input_email" type="text" placeholder="Digite seu e-mail"><br>
+              <span id="span_email">E-mail:</span>
+              <input id="input_email" type="text" placeholder="Digite seu e-mail">
+              <div id="div_email_verify" class="verify-text"></div>
               <div id="emailCarac"></div>
             </div>
 
             <div class="campo-registro">
-              <span id="span_senha">
-                <div id="div_senha_verify" class="verify-text"></div>Senha: <br>
-                <!-- Senha deve conter caracteres especiais. ("!", "@", "#", "_", "-", ".") -->
-              </span>
-              <input id="input_senha" type="text" placeholder="Digite sua senha"><br>
+              <span id="span_senha">Senha:</span>
+              <input id="input_senha" type="text" placeholder="Digite sua senha">
+              <div id="div_senha_verify" class="verify-text"></div>
               <div id="senhaCarac"></div>
+              <!-- Sugestão: a senha deve conter caracteres especiais como "!", "@", "#", "_", "-" ou "." -->
             </div>
 
-            <div class="campo-registro">
-              <!-- <span id="span_cpf_cnpj">CPF ou CNPJ (APENAS NÚMEROS):</span> -->
-              <!-- <input maxlength="14" minlength="11" id="input_cpf_cnpj" type="text"
-                placeholder="Digite seu CPF/CNPJ"><br> -->
-              <div id="cpf_cnpjCarac"></div>
-            </div>
+            <!-- Campo CPF/CNPJ removido por estar comentado -->
 
             <div class="campo-registro">
               <span id="span_telefone">Telefone:</span>
-              <input maxlength="11" minlength="10" id="input_telefone" type="text"
-                placeholder="Digite seu telefone ex:11912345678 "><br>
+              <input id="input_telefone" type="text" maxlength="11" minlength="10"
+                placeholder="Digite seu telefone. Ex: 11912345678">
               <div id="telefoneCarac"></div>
             </div>
+
             <div id="div_Login_Alert" class="verify-text"></div>
 
             <button class="botao-registro" onclick="Verify_Variables()">Continuar</button>
           </div>
         </div>
+
       </div>
     </div>
   </div>
-
-
 </body>
 
 </html>
