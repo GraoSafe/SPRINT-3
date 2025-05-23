@@ -10,11 +10,8 @@ body {
 
 .container {
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
 
-    height: 1000px;
+    height: 100%;
     width: 100%;
 
 }
@@ -24,22 +21,33 @@ body {
 
 }
 
+.imagem{
+    position: absolute;
+    z-index: -1;
+    width: 100rem;
+    height: 50rem;
+    background-image: url(../Imagens/soja2.jpg);
+    filter: blur(8px);
+    background-size: cover;
+    top: 0;
+    bottom: 0;
+    margin: 0;
+}
+
 .bemvindo {
     display: flex;
     flex-direction: column;
-    background-image: url('../Imagens/soja2.jpg');
-    background-size:cover;
-    background-position: center;
-    height: 1000px;
+
+    height: 100%;
     width: 100%;
+    margin: 20% 0 0 5%;
 }
 
 
 .bemvindo h1{
     font-weight: bolder;
     color: #0A5436;
-    margin: 200px 750px 0px 0px;
-    filter: drop-shadow(5px 3px 10px white);
+    /* filter: drop-shadow(1px 5px 2px lightgray); */
     font-size: 40px;
 }
 
@@ -47,8 +55,7 @@ body {
     font-weight: bolder;
     font-size: larger;
     color: #0A5436;
-    margin: 10px 750px 0px 0px;
-    filter: drop-shadow(5px 3px 10px white);
+    /* filter: drop-shadow(1px 5px 2px lightgray); */
     font-size: 23px;
 }
 
@@ -57,8 +64,6 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 60%;
-    height: 100%;
 }
 
 .container-login {
@@ -67,22 +72,19 @@ body {
     justify-content: center;
     align-items: center;
 
-    height: fit-content;
     width: 100%;
     height: 100%;
-    z-index: 2;
 
 
     background: linear-gradient(to right, #1f865d 0%, #0A5436 60%, #0a5c3b 100%);
 
-    padding-top: 20px;
-    padding-bottom: 50px;
+    padding: 5% 5% 20% 5%;
     /* border: solid 2px rgb(1, 61, 1); */
     /* box-shadow: 0px 0px 3px 3px rgba(255, 255, 255, 0.788); */
 
 }
 
-
+/* 
 .img-bg {
     background-image: url('../Imagens/soja2.jpg');
     background-size: cover;
@@ -96,7 +98,7 @@ body {
    
     background-repeat: no-repeat;
     z-index: -1;
-}
+} */
 
 
 .logo-gs {
@@ -208,28 +210,34 @@ input:focus {
     padding: 7px;
     width: 100%;
     border-radius: 5px;
-    cursor: pointer;
     font-weight: bold;
     font-size: 25px;
     margin-bottom: 15px;
+
+    transition-duration: 0.4s;
+    cursor: pointer;
 }
 
 .botao-registro {
-    background: linear-gradient(to right, #1f865d 0%, #0A5436 60%, #0a5c3b 100%);
+    background-image: linear-gradient(to right, #1f865d 0%, #0A5436 60%, #0a5c3b 100%);
     color: white;
     border: none;
     padding: 7px;
     width: 100%;
+    height: 100%;
     border-radius: 5px;
     cursor: pointer;
     font-weight: bold;
     font-size: 25px;
     margin-top: 20px;
+    transition: 0.3s ease-in-out;
 }
 
 
 .botao:hover {
     background-color: #DB6900;  
+    color: white;
+    
 }
 
 .buttom-back {
@@ -253,10 +261,10 @@ input:focus {
     height: 50px;
 }
 
-.img-g :hover {
-    width: 65px;
-    height: 65px;
-    transition: all 0.3s ease-out;
+.buttom-back :hover {
+    height: 55px;
+    width: 55px;
+    transition: all 0.3s ease-in-out;
 }
 
 .campo .senhaCarac {
