@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/home.css">
+    <link href="https://fonts.googleapis.com/css?family=Jost" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <title>GrãoSafe</title>
+</head>
+
+<body>
+
+    <div class="logo">
+        <img src="../Imagens/GraoSafe.png" class="img" alt="Logo GrãoSafe">
+    </div>
+
+    <a href="./html/login.html" style="text-decoration: none;">
+        <div class="login border login-button" style="cursor: pointer;">
+            <span style="color: #FAF2FF;"><b>Login</b></span>
+        </div>
+    </a>
+
+    <div class="navbar">
+        <b>
+            <a href="./home.html"><span class="tsize">Home</span></a>
+            <a href="./public/html/calculadora.html"><span class="tsize">Simulação</span></a>
+        </b>
+    </div>
+
+    <b>
+        <div class="titulo">Monitore seus silos e gere insights valiosos!</div>
+    </b>
+
+    <div class="divPai">
+
+        <div class="box1">
+            <div class="texto">
+                Unimos tecnologia e inovação para garantir a qualidade da soja armazenada. Nosso sistema
+                de monitoramento inteligente, baseado em sensores IoT e dashboards em tempo real, ajuda empresas do
+                agronegócio a reduzir perdas e maximizar seus lucros.
+            </div>
+        </div>
+
+        <div class="box2">
+            <div class="soja">
+                <img src="https://dnagro.com.br/wp-content/uploads/2021/04/imagens-soja.png" alt="Imagem de soja">
+            </div>
+        </div>
+
+    </div>
+
+    <div class="contato"></div>
+
+    <div>
+        <button class="botao" onclick="document.getElementById('contato').scrollIntoView({ behavior: 'smooth' })">
+            Contato
+        </button>
+    </div>
+
+    <div class="div_pai">
+
+        <h1 class="titulo2">Como o sensor funciona</h1>
+        <h2 class="subtitulo">Instale, monitore e maximize seus lucros em poucos passos.</h2>
+
+        <div class="circulos">
+            <div class="circulo1">
+                <img src="../Imagens/Vector.png" alt="Ícone 1" height="50px">
+            </div>
+            <div class="circulo2">
+                <img src="../Imagens/Vector (1).png" alt="Ícone 2" height="40px">
+            </div>
+            <div class="circulo3">
+                <img src="../Imagens/Vector (2).png" alt="Ícone 3" height="40px">
+            </div>
+        </div>
+
+        <div class="div_bloco">
+
+            <div class="bloco1">
+                <h1>Instalação Inteligente</h1>
+                <div class="textoh3">
+                    <h3>Sensores de temperatura são instalados nos silos para coletar dados continuamente.</h3>
+                </div>
+            </div>
+
+            <div class="bloco2">
+                <h2>Monitoramento em Tempo Real</h2>
+                <div class="textoh3">
+                    <h3>Nosso sistema armazena e analisa as informações, alertando sobre variações fora do padrão.</h3>
+                </div>
+            </div>
+
+            <div class="bloco3">
+                <h2>Decisão Estratégica</h2>
+                <div class="textoh3">
+                    <h3>Com dashboards intuitivos, os gestores tomam decisões rápidas para evitar perdas e otimizar a armazenagem.</h3>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="div_mae">
+        <img class="topo" src="../Imagens/forma topo.png" alt="Imagem decorativa do topo">
+
+        <h1 id="contato" class="titulo3">Entre em contato</h1>
+
+        <div class="dados">
+            <input id="input_nome" class="nome" type="text" placeholder="Nome">
+            <input id="input_email" class="email" type="text" placeholder="E-mail">
+            <div id="div_email"></div><br>
+            <input id="input_mensagem" class="mensagem" type="text" placeholder="Digite sua mensagem">
+            <div id="div_mensagem"></div><br>
+            <button class="enviar" onclick="enviar()">Enviar</button>
+        </div>
+    </div>
+
+    <div class="final">
+        <div class="container_fundo">
+            <div class="container_final_direito">
+                <h1 class="graosafe">GrãoSafe</h1>
+                <h4 class="frasefinal">Monitorando silos, minimizando perdas!</h4>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js">
+</script>
+<script>
+    function enviar() {
+        var nome = input_nome.value;
+        var email = input_email.value;
+        var mensagem = input_mensagem.value;
+
+        if(nome == "" || email == "" || mensagem == "") {
+            div_mensagem.innerHTML = `<span style="color: red;">* Preencha todos os campos.</span>`
+        }
+        else if (!email.includes('@') || !email.includes('.') || email !== email.toLowerCase()) {
+            div_email.innerHTML = `<span style="color: red;">* Email incorreto.</span>`
+        }
+        else {
+            Toastify({
+                text: "Mensagem Enviada!",
+                duration: 3000,
+                style: {
+                    background: "linear-gradient(to right, #3CB371, #00FF7F)",
+                },
+            }).showToast();
+        }
+    }
+</script>
