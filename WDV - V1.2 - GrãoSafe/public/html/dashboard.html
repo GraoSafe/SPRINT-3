@@ -41,38 +41,52 @@
                     <div class="grafico">
                         <h1 class="tituloPrinc">Dashboard GrãoSafe</h1>
                         <div class="grafico-caixa-pai">
+                            <div>
+                                <div class="temp-media-atual">
+                                    
+                                    <div class="grafico-caixa">
+                                        <h1 class="tituloDiario">Temperatura média diária</h1>
+                                        <h2 class="temp-media" id="temp_atual">23°C</h2>
+                                    </div>
+                                    
+                                    <div class="grafico-caixa">
+                                        <h1 class="tituloAlerta">Alertas totais diários</h1>
+                                        <h2 class="alertas" id="alertas">10</h2>
+                                    </div>
+                                    
+                                    <div class="grafico-caixa">
+                                        <h1 class="tituloAtual">Temperatura atual</h1>
+                                        <h2 class="temp-atual" id="temp_atual">27°C</h2>
+                                    </div>
+                                    
+                                </div>
 
-                        <div class="grafico-caixa1">
-                            <h3 class="tituloDiaria">Temperatura diária</h1>
-                        <canvas id="Grafico1" class="grafico1" style="height: 80px; width: 260px; background-color: rgb(209, 203, 203);"></canvas>
-                        </div>
 
-                        
-                        <div class="temp-media-atual">
-
-                            <div class="grafico-caixa">
-                                <h1 class="tituloAtual">Temperatura atual</h1>
-                            <h2 class="temp-atual" id="temp_atual">27°C</h2>
                             </div>
 
-                            <div class="grafico-caixa">
-                                <h1 class="tituloDiario">Temperatura média diária</h1>
-                                <h2 class="temp-media" id="temp_atual">23°C</h2>
+                            <div class="caixa_principal">
+                                <div class="caixa_dash2">
+                                    <canvas id="Grafico3" class="grafico3" style="height: 200px; width: 100%; background-color: rgb(209, 203, 203);"></canvas>
+                                </div>
+                                <div class="caixa_dash1">
+                                    
+                                    <div class="grafico-caixa1">
+                                        <h3 class="tituloDiaria">Temperatura diária</h1>
+                                            <canvas id="Grafico1" class="grafico1" style="height: 280px; width: 100%; background-color: rgb(209, 203, 203);"></canvas>
+                                    </div>
+                                    
+                                    <div class="grafico-caixa-pizza">
+                                        <h1 class="tituloMensal">Relatório mensal de temperatura</h1>
+                                            <canvas id="Grafico2" class="grafico2" style="height: 80%; width: 80%; margin-left: 10px;"></canvas>
+                                    </div>
+                                                                
+                                    
+                                    
+                                    
+                                    
+                                </div>
                             </div>
 
-                             <div class="grafico-caixa">
-                                <h1 class="tituloAlerta">Alertas totais diários</h1>
-                                <h2 class="alertas" id="alertas">10</h2>
-                            </div>
-
-                        </div>
-
-                        <div class="grafico-caixa-pizza">
-                            <h1 class="tituloMensal">Relatório mensal de temperatura</h1>
-                        <canvas id="Grafico2" class="grafico2" style="height: 50px; width: 50px; margin-left: 10px;"></canvas>
-                        </div>
-                        
-                        
                         </div>
 
                         <!-- <div class="grafico-caixa-2">
@@ -92,6 +106,7 @@
 <script>
     var Grafico1 = document.getElementById('Grafico1');
     var Grafico2 = document.getElementById('Grafico2');
+    var Grafico3 = document.getElementById('Grafico3');
 
 
     Grafico1 = new Chart(Grafico1, {
@@ -108,7 +123,7 @@
                     }]
                 },
                 options: {
-                    responsive: true,
+                    responsive: false,
                     
                     plugins: {
                         legend: {
@@ -140,7 +155,7 @@
         }]
     },
     options: {
-        responsive: true,
+        responsive: false,
         plugins: {
             legend: {
                 display: true,
@@ -154,5 +169,40 @@
         }
     }
 });
+Grafico1 = new Chart(Grafico3, {
+                type: 'bar',
+                data: {
+                    labels: ['06:00','07:00','08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00'],
+                    datasets: [{
+                        label: 'Temperatura' ,
+                        data: [17, 17,19,20,20,23,31,27,29,25,27],
+                        backgroundColor: ['#DB6901'],
+                        borderColor: ['#DB6901'],
+                        borderWidth: 1,
+                        barThickness: 40,
+                    }]
+                },
+                options: {
+                    responsive: false,
+                    
+                    plugins: {
+                        legend: {
+                            display: true,
+                            labels: {
+                                font: {
+                                    size: 15
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                            
+                        }
+                    }
+                }
+            });
+
 
 </script>
