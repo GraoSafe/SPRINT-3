@@ -104,25 +104,44 @@
 </body>
 </html>
 <script>
-    var Grafico1 = document.getElementById('Grafico1');
-    var Grafico2 = document.getElementById('Grafico2');
-    var Grafico3 = document.getElementById('Grafico3');
+
+const Grafico1 = document.getElementById('Grafico1');
+const Grafico2 = document.getElementById('Grafico2');
+const Grafico3 = document.getElementById('Grafico3');
 
 
-    Grafico1 = new Chart(Grafico1, {
+var contador = 1
+window.onload = function cont() {
+    if (contador > 0) {
+
+
+    fetch("/dashboard/temperaturaAtual")
+        .then(res => {
+            if(!res.ok) {
+                throw new Error(`Erro na resposta da temperaturaAtual: ${res.status}`)
+            }
+            return res.json()
+        })
+        .then(temperaturaAtual => {
+            console.log('Temperatura:', temperaturaAtual)
+            const temp_atual = temperaturaAtual.map(item => item.temperatura)
+            const GraficoLinhas = new Chart(Grafico1, {
                 type: 'line',
                 data: {
                     labels: ['06:00','07:00','08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00'],
                     datasets: [{
                         label: 'Temperatura' ,
-                        data: [17, 17,19,20,20,23,31,27,29,25,27],
+                        data: temp_atual,
                         backgroundColor: ['#DB6901'],
                         borderColor: ['#DB6901'],
                         borderWidth: 5,
-                        barThickness: 500,
+
+                        barThickness: 5,
                     }]
                 },
                 options: {
+                    devicePixelRatio: 5,
+                       maintainAspectRatio: false,
                     responsive: false,
                     
                     plugins: {
@@ -143,13 +162,27 @@
                     }
                 }
             });
+            contador += 1 ;
+            setTimeout(cont,2500)
+            setTimeout(destroy,5000)
+            function destroy(){
+                GraficoLinhas.destroy()
+                cont()
+            }
+        })
+    }
+}
+
+
+
+
 
     Grafico2 = new Chart(Grafico2, {
         type: 'doughnut',
     data: {
         labels: ['Dias acima de 30°C', 'Dias entre 24°C e 26°C'], 
         datasets: [{
-            data: [10, 21],
+            data: kkkk,
             backgroundColor: [ 'rgb(10, 84, 54)', '#DB6901'],
             borderColor: ['rgba(255, 99, 132, 1)', 'rgba(75, 192, 192, 1)']
         }]
@@ -203,6 +236,8 @@ Grafico1 = new Chart(Grafico3, {
                     }
                 }
             });
+
+
 
 
 </script>
