@@ -15,8 +15,8 @@ telefone VARCHAR(14) UNIQUE NOT NULL
 -- CRIAÇÃO DA TABELA EMPRESA.
 CREATE TABLE empresa(
 idEmpresa INT PRIMARY KEY NOT NULL,
-nomeEmpresa VARCHAR(45) NOT NULL,
-Codigo_Ativacao INT NOT NULL,
+nome VARCHAR(45) NOT NULL,
+codigo_ativacao INT NOT NULL,
 dtCadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
 CNPJ CHAR(14) NOT NULL,
 CEP CHAR(8) NOT NULL,
@@ -62,83 +62,67 @@ CONSTRAINT fkSensor FOREIGN KEY (fkSensor) REFERENCES sensor(idSensor)
 );
 
 -- INSERINDO DADOS DA TABELA CLIENTE.
-INSERT INTO Empresa (nomeEmpresa, cnpj_cpf, dtCadastro, email, senha, telefone, fkFilial) VALUES
-('Empresa ABC', 12345678000195,'2015-05-14 15:30:00','empresaabc@gmail.com', 'senha123', 5511987654321,1),
-('Tech Solutions', 98765432000100,'2019-11-25 13:00:00','techsolutions@hotmail.com', 'senha456', 5511976543210,1),
-('Logistica LTDA', 19283746500010,'2023-03-17 18:30:00','logistica.ltda@outlook.com', 'senha789', 5511965432109,1); 
+INSERT INTO empresa (nome, codigo_ativacao, CPNJ, dtCadastro, fkFilial, fkUsuario) VALUES
+('Empresa ABC','HIJ901', 12345678000195,'2015-05-14 15:30:00',1,1),
+('Tech Solutions','EFG678', 98765432000100,'2019-11-25 13:00:00',1,2),
+('Logistica LTDA','ABC456',19283746500010,'2023-03-17 18:30:00',1,3); 
 
 -- INSERINDO DADOS DA TABELA SILO.
-INSERT INTO silo (nome, tipo, fkClienteSilo, capacidadeTonelada) VALUES
+INSERT INTO silo (nome, tipo, fkEmpSilo, capacidadeTonelada) VALUES
 ('Silo A', 'Silo de concreto',1, 124),
 ('Silo Central', 'Silo de concreto',2, 378),
 ('Silo Norte', 'Silo metálico',3, 92);
 
 -- INSERINDO DADOS DA TABELA SENSORLM35.
-INSERT INTO sensorLM35 (dtInstalacao, dtManutencao, statusSensor,fkSilo)VALUES
+INSERT INTO sensor (dtInstalacao, dtManutencao, statusSensor,fkSilo) VALUES
 ('2025-03-05 14:30:00','2023-03-11 11:00:00','Ativo',1),
 ('2024-01-10 09:00:00', '2025-02-25 16:45:00', 'Inativo',2),
 ('2024-03-10 13:00:00', '2025-02-28 11:00:00', 'Inativo',3);
 
-select * from dadoSensor;
-
--- EXIBINDO OS DADOS DA EMPRESA.
-SELECT c.nomeEmpresa AS 'Nome da Empresa',
-c.cnpj_cpf AS 'CPF ou CNPJ',
-c.email AS 'Email',
-c.senha AS 'Senha',
-c.telefone AS 'Telefone',
-c.dtCadastro AS 'Data de cadastro'
-FROM cliente AS c;
+-- EXIBINDO OS DADOS DA EMPRESA CADASTRADA.
+SELECT e.nome AS 'Nome da Empresa',
+e.CNPJ,
+u.email AS 'Email',
+u.senha AS 'Senha',
+u.telefone AS 'Telefone',
+e.dtCadastro AS 'Data de cadastro'
+FROM empresa AS e
+LEFT JOIN usuario AS u
+ON e.fkUsuario = u.idUsuario;
 
 -- SELECT COM DADOS DO SENSOR E DA TEMPERATURA.
-SELECT c.nomeEmpresa AS 'Nome da empresa',
+SELECT e.nome AS 'Nome da empresa',
 s.nome AS 'Nome do silo', s.tipo AS 'Tipo de silo', l.dtInstalacao AS 'Data de instalação do sensor',
-l.dtManutencao AS 'Data de Manutenção', l. statusSensor AS 'Status do sensor' FROM
-cliente AS c JOIN endereco AS e ON c.idCliente = e.fkCliente
-JOIN silo AS s ON e.idEndereco = s.fkClienteSilo
-JOIN sensorLM35 AS l ON s.idSilo = l.fkSilo;
+l.dtManutencao AS 'Data de Manutenção', l.statusSensor AS 'Status do sensor' FROM
+empresa AS e JOIN silo AS s ON e.idEmpresa = s.fkEmpSilo
+JOIN sensor AS l ON s.idSilo = l.fkSilo;
 
 -- EXIBINDO OS DADOS DAS EMPRESAS E OS DADOS DE SEUS SILOS.
-SELECT c.nomeEmpresa AS 'Nome da Empresa',
-c.email AS 'Email',
-c.senha AS 'Senha',
-c.cnpj_cpf AS 'CNPJ',
-c.telefone AS 'Contato',
+SELECT e.nome AS 'Nome da Empresa',
+u.email AS 'Email',
+u.senha AS 'Senha',
+e.CNPJ,
+u.telefone AS 'Contato',
 e.CEP,
-e.rua AS 'Rua',
-e.bairro AS 'Bairro',
 e.cidade as 'Cidade',
 e.UF,
+e.estado as 'Estado',
 s.nome AS 'Nome do Silo',
 s.tipo AS 'Tipo de Silo',
 s.capacidadeTonelada AS 'Capacidade do Silo em toneladas',
 lm.statusSensor AS 'Status do sensor',
 lm.dtInstalacao AS 'Data de instalação do sensor',
 lm.dtManutencao AS 'Data de manutenção do sensor',
-c.dtCadastro AS 'Quando se cadastrou'
-FROM cliente AS c JOIN endereco AS e ON e.fkCliente = c.idCliente
-JOIN silo AS s ON s.fkClienteSilo = c.idCliente
-JOIN sensorLM35 AS lm ON lm.fkSilo = s.idSilo;
-
--- EXIBINDO DADOS DAS EMPRESAS QUE TROCARAM DE SENHA.
-SELECT c.idCliente,
-c.nomeEmpresa,
-c.email,
-r.novaSenha,
-r.dtTroca
-FROM recSenha r
-JOIN cliente c 
-ON r.fkCliRec = c.idCliente;
-
--- ATUALIZANDO E DELETANDO DADOS DA EMPRESA TECH SOLUTIONS.
-UPDATE endereco SET rua = 'Rua Delta R' WHERE idEndereco = 2;
-UPDATE endereco SET bairro = 'Dos techs' WHERE idEndereco = 2;
-UPDATE endereco SET cidade = 'Rio Grande do Norte' WHERE idEndereco = 2;
-UPDATE endereco SET CEP = '04849220' WHERE idEndereco = 2;
-UPDATE endereco SET UF = 'RN' WHERE idEndereco = 2;
+e.dtCadastro AS 'Quando se cadastrou'
+FROM usuario AS u JOIN empresa AS e ON e.fkUsuario = u.idUsuario
+JOIN silo AS s ON s. fkEmpSilo = e.idEmpresa
+JOIN sensor AS lm ON lm.fkSiloSensor = s.idSilo;
 
 -- DELETANDO OS DADOS DA EMPRESA ABC DEVIDO AO CORTE DE CONTRATO.
-DELETE FROM cliente WHERE idCliente = 1;
-DELETE FROM endereco WHERE idEndereco = 1;
+DELETE FROM usuario WHERE idUsuario = 1;
+DELETE FROM empresa WHERE idEmpresa = 1;
 DELETE FROM silo WHERE idSilo = 1;
-DELETE FROM sensorLM35 WHERE idSensor = 1;  
+DELETE FROM sensor WHERE idSensor = 1;  
+
+-- SELECT PARA MOSTRAR OS DADOS DO SENSOR
+select * from medida;
