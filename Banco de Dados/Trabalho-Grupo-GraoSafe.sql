@@ -1,128 +1,112 @@
--- CRIANDO O BANCO DE DADOS.
+-- CRIANDO O BANCO DE DADOS
 CREATE DATABASE GraoSafe;
 USE GraoSafe;
+DROP DATABASE GraoSafe;
 
--- CRIAÇÃO DA TABELA CLIENTE.
-CREATE TABLE usuario(
-idUsuario INT PRIMARY KEY AUTO_INCREMENT,
-nome VARCHAR(50) NOT NULL,
-email VARCHAR(100) NOT NULL UNIQUE, 
-CONSTRAINT checkEmail check(email LIKE '%@%'),
-senha VARCHAR(100) NOT NULL,
-telefone VARCHAR(14) UNIQUE NOT NULL
+-- CRIAÇÃO DA TABELA CLIENTE (USUÁRIO)
+CREATE TABLE usuario (
+    idUsuario INT PRIMARY KEY AUTO_INCREMENT, -- AUTO_INCREMENT para o idUsuario
+    nome VARCHAR(50) NOT NULL, -- Nome do usuário
+    email VARCHAR(100) NOT NULL UNIQUE, -- E-mail único
+    CONSTRAINT checkEmail CHECK (email LIKE '%@%'), -- Validação simples para e-mail
+    senha VARCHAR(100) NOT NULL, -- Senha
+    telefone VARCHAR(14) UNIQUE NOT NULL -- Telefone único
 );
 
--- CRIAÇÃO DA TABELA EMPRESA.
-CREATE TABLE empresa(
-idEmpresa INT PRIMARY KEY NOT NULL,
-nome VARCHAR(45) NOT NULL,
-codigo_ativacao INT NOT NULL,
-dtCadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
-CNPJ CHAR(14) NOT NULL,
-CEP CHAR(8) NOT NULL,
-estado VARCHAR(45),
-UF CHAR(2),
-cidade VARCHAR(45),
-fkFilial INT NOT NULL,
-fkUsuario INT NOT NULL,
-CONSTRAINT fkFilial FOREIGN KEY (fkFilial) REFERENCES empresa(idEmpresa),
-CONSTRAINT fkUsuario FOREIGN KEY (fkUsuario) REFERENCES usuario(idUsuario)
+-- CRIAÇÃO DA TABELA EMPRESA (corrigindo o tipo da coluna codigo_ativacao)
+CREATE TABLE empresa (
+    idEmpresa INT PRIMARY KEY AUTO_INCREMENT, -- AUTO_INCREMENT para idEmpresa
+    nome VARCHAR(45) NOT NULL, -- Nome da empresa
+    codigo_ativacao VARCHAR(20) NOT NULL, -- Altere para VARCHAR(20) para suportar códigos alfanuméricos
+    dtCadastro DATETIME DEFAULT CURRENT_TIMESTAMP, -- Data de cadastro com valor default
+    cnpj CHAR(14) NOT NULL, -- CNPJ da empresa
+    cep CHAR(8) NOT NULL, -- CEP da empresa
+    estado VARCHAR(45), -- Estado
+    uf CHAR(2), -- UF (Unidade Federativa)
+    cidade VARCHAR(45), -- Cidade
+    fkFilial INT NOT NULL, -- Filial
+    fkUsuario INT NOT NULL, -- ID do usuário associado
+    CONSTRAINT fkFilial FOREIGN KEY (fkFilial) REFERENCES empresa(idEmpresa), -- Chave estrangeira para a filial
+    CONSTRAINT fkUsuario FOREIGN KEY (fkUsuario) REFERENCES usuario(idUsuario) -- Chave estrangeira para o usuário
 );
 
--- CRIAÇÃO DA TABELA SILO.
-CREATE TABLE silo(
-idSilo INT PRIMARY KEY AUTO_INCREMENT,
-tipo VARCHAR (50) NOT NULL,
-CONSTRAINT chkTipo CHECK(tipo IN('Silo metálico', 'Silo de alvenaria', 'Silo de concreto', 'Silos bolsa', 'Armazém graneleiro')),
-fkEmpSilo INT NOT NULL,
-CONSTRAINT fkEmpSilo FOREIGN KEY (fkEmpSilo) REFERENCES empresa(idEmpresa),
-capacidadeTonelada INT NOT NULL
+
+-- CRIAÇÃO DA TABELA SILO
+CREATE TABLE silo (
+    idSilo INT PRIMARY KEY AUTO_INCREMENT, -- AUTO_INCREMENT para idSilo
+    tipo VARCHAR(50) NOT NULL, -- Tipo de silo
+    CONSTRAINT chkTipo CHECK (tipo IN ('Silo metálico', 'Silo de alvenaria', 'Silo de concreto', 'Silos bolsa', 'Armazém graneleiro')), -- Validação do tipo de silo
+    fkEmpSilo INT NOT NULL, -- ID da empresa associada ao silo
+    CONSTRAINT fkEmpSilo FOREIGN KEY (fkEmpSilo) REFERENCES empresa(idEmpresa), -- Chave estrangeira para a empresa
+    capacidadeTonelada INT NOT NULL -- Capacidade do silo em toneladas
 );
 
--- CRIAÇÃO DA TABELA SENSORLM35.
-CREATE TABLE sensor(
-idSensor INT PRIMARY KEY AUTO_INCREMENT,
-tipo VARCHAR(45),
-dtInstalacao DATETIME,
-dtManutencao DATETIME,
-statusSensor VARCHAR (50),
-CONSTRAINT chkStatus CHECK (statusSensor IN ('Ativo', 'Inativo', 'Manutenção')),
-CONSTRAINT chkTipoSensor CHECK (tipo IN ('LM35')),
-fkSilo INT NOT NULL,
-CONSTRAINT fkSiloSensor FOREIGN KEY (fkSilo) REFERENCES silo(idSilo)
+-- CRIAÇÃO DA TABELA SENSOR LM35
+CREATE TABLE sensor (
+    idSensor INT PRIMARY KEY AUTO_INCREMENT, -- AUTO_INCREMENT para idSensor
+    tipo VARCHAR(45), -- Tipo do sensor (ex: LM35)
+    dtInstalacao DATETIME, -- Data de instalação do sensor
+    dtManutencao DATETIME, -- Data de manutenção do sensor
+    statusSensor VARCHAR(50), -- Status do sensor
+    CONSTRAINT chkStatus CHECK (statusSensor IN ('Ativo', 'Inativo', 'Manutenção')), -- Validação do status
+    CONSTRAINT chkTipoSensor CHECK (tipo IN ('LM35')), -- Validação do tipo de sensor (só LM35 por enquanto)
+    fkSilo INT NOT NULL, -- ID do silo ao qual o sensor está associado
+    CONSTRAINT fkSiloSensor FOREIGN KEY (fkSilo) REFERENCES silo(idSilo) -- Chave estrangeira para o silo
 );
 
--- CRIAÇÃO DA TABELA DADOSENSOR.
-CREATE TABLE medida(
-idMedida INT PRIMARY KEY AUTO_INCREMENT,
-temperatura FLOAT NOT NULL,
-dtHora DATETIME DEFAULT CURRENT_TIMESTAMP,
-fkSensor INT NOT NULL,
-CONSTRAINT fkSensor FOREIGN KEY (fkSensor) REFERENCES sensor(idSensor)
+-- CRIAÇÃO DA TABELA DADOSENSOR (Leitura de Temperatura)
+CREATE TABLE medida (
+    idMedida INT PRIMARY KEY AUTO_INCREMENT, -- AUTO_INCREMENT para idMedida
+    temperatura FLOAT NOT NULL, -- Temperatura medida pelo sensor
+    dtHora DATETIME DEFAULT CURRENT_TIMESTAMP, -- Data e hora da medição
+    fkSensor INT NOT NULL, -- ID do sensor que fez a medição
+    CONSTRAINT fkSensor FOREIGN KEY (fkSensor) REFERENCES sensor(idSensor) -- Chave estrangeira para o sensor
 );
 
--- INSERINDO DADOS DA TABELA CLIENTE.
-INSERT INTO empresa (nome, codigo_ativacao, CPNJ, dtCadastro, fkFilial, fkUsuario) VALUES
-('Empresa ABC','HIJ901', 12345678000195,'2015-05-14 15:30:00',1,1),
-('Tech Solutions','EFG678', 98765432000100,'2019-11-25 13:00:00',1,2),
-('Logistica LTDA','ABC456',19283746500010,'2023-03-17 18:30:00',1,3); 
+-- INSERÇÃO DE DADOS NA TABELA USUARIO (Cliente)
+INSERT INTO usuario (nome, email, senha, telefone) VALUES
+('João Silva', 'joao@empresa.com', 'senha123', '11999999999'),
+('Maria Souza', 'maria@tech.com', 'senha456', '11988888888'),
+('Carlos Pereira', 'carlos@logistica.com', 'senha789', '11977777777');
 
--- INSERINDO DADOS DA TABELA SILO.
-INSERT INTO silo (nome, tipo, fkEmpSilo, capacidadeTonelada) VALUES
-('Silo A', 'Silo de concreto',1, 124),
-('Silo Central', 'Silo de concreto',2, 378),
-('Silo Norte', 'Silo metálico',3, 92);
+-- INSERÇÃO DE DADOS NA TABELA EMPRESA (agora com codigo_ativacao como VARCHAR)
+INSERT INTO empresa (nome, codigo_ativacao, dtCadastro, fkFilial, fkUsuario, cnpj, cep, estado, uf, cidade) VALUES
+('Empresa ABC', 'HIJ901', '2015-05-14 15:30:00', 1, 1, '12345678000195', '12345678', 'São Paulo', 'SP', 'São Paulo'),
+('Tech Solutions', 'EFG678', '2019-11-25 13:00:00', 1, 2, '98765432000100', '87654321', 'Rio de Janeiro', 'RJ', 'Rio de Janeiro'),
+('Logistica LTDA', 'ABC456', '2023-03-17 18:30:00', 1, 3, '19283746500010', '11223344', 'Belo Horizonte', 'MG', 'Minas Gerais');
 
--- INSERINDO DADOS DA TABELA SENSORLM35.
-INSERT INTO sensor (dtInstalacao, dtManutencao, statusSensor,fkSilo) VALUES
-('2025-03-05 14:30:00','2023-03-11 11:00:00','Ativo',1),
-('2024-01-10 09:00:00', '2025-02-25 16:45:00', 'Inativo',2),
-('2024-03-10 13:00:00', '2025-02-28 11:00:00', 'Inativo',3);
 
--- EXIBINDO OS DADOS DA EMPRESA CADASTRADA.
-SELECT e.nome AS 'Nome da Empresa',
-e.CNPJ,
-u.email AS 'Email',
-u.senha AS 'Senha',
-u.telefone AS 'Telefone',
-e.dtCadastro AS 'Data de cadastro'
-FROM empresa AS e
-LEFT JOIN usuario AS u
-ON e.fkUsuario = u.idUsuario;
+-- INSERÇÃO DE DADOS NA TABELA SILO
+INSERT INTO silo (tipo, fkEmpSilo, capacidadeTonelada) VALUES
+('Silo de concreto', 1, 124),
+('Silo de concreto', 2, 378),
+('Silo metálico', 3, 92);
 
--- SELECT COM DADOS DO SENSOR E DA TEMPERATURA.
-SELECT e.nome AS 'Nome da empresa',
-s.nome AS 'Nome do silo', s.tipo AS 'Tipo de silo', l.dtInstalacao AS 'Data de instalação do sensor',
-l.dtManutencao AS 'Data de Manutenção', l.statusSensor AS 'Status do sensor' FROM
-empresa AS e JOIN silo AS s ON e.idEmpresa = s.fkEmpSilo
-JOIN sensor AS l ON s.idSilo = l.fkSilo;
+-- INSERÇÃO DE DADOS NA TABELA SENSOR LM35
+INSERT INTO sensor (tipo, dtInstalacao, dtManutencao, statusSensor, fkSilo) VALUES
+('LM35', '2025-03-05 14:30:00', '2023-03-11 11:00:00', 'Ativo', 1),
+('LM35', '2024-01-10 09:00:00', '2025-02-25 16:45:00', 'Inativo', 2),
+('LM35', '2024-03-10 13:00:00', '2025-02-28 11:00:00', 'Inativo', 3);
 
--- EXIBINDO OS DADOS DAS EMPRESAS E OS DADOS DE SEUS SILOS.
-SELECT e.nome AS 'Nome da Empresa',
-u.email AS 'Email',
-u.senha AS 'Senha',
-e.CNPJ,
-u.telefone AS 'Contato',
-e.CEP,
-e.cidade as 'Cidade',
-e.UF,
-e.estado as 'Estado',
-s.nome AS 'Nome do Silo',
-s.tipo AS 'Tipo de Silo',
-s.capacidadeTonelada AS 'Capacidade do Silo em toneladas',
-lm.statusSensor AS 'Status do sensor',
-lm.dtInstalacao AS 'Data de instalação do sensor',
-lm.dtManutencao AS 'Data de manutenção do sensor',
-e.dtCadastro AS 'Quando se cadastrou'
-FROM usuario AS u JOIN empresa AS e ON e.fkUsuario = u.idUsuario
-JOIN silo AS s ON s. fkEmpSilo = e.idEmpresa
-JOIN sensor AS lm ON lm.fkSiloSensor = s.idSilo;
-
--- DELETANDO OS DADOS DA EMPRESA ABC DEVIDO AO CORTE DE CONTRATO.
-DELETE FROM usuario WHERE idUsuario = 1;
-DELETE FROM empresa WHERE idEmpresa = 1;
-DELETE FROM silo WHERE idSilo = 1;
-DELETE FROM sensor WHERE idSensor = 1;  
-
--- SELECT PARA MOSTRAR OS DADOS DO SENSOR
-select * from medida;
+-- EXIBINDO OS DADOS DAS EMPRESAS E SEUS DADOS DE SILOS E SENSOR
+SELECT 
+    e.nome AS 'Nome da Empresa',
+    u.email AS 'Email',
+    u.senha AS 'Senha',
+    e.cnpj AS 'CNPJ',
+    u.telefone AS 'Contato',
+    e.cep AS 'CEP',
+    e.cidade AS 'Cidade',
+    e.uf AS 'UF',
+    e.estado AS 'Estado',
+    s.tipo AS 'Tipo de Silo',
+    s.capacidadeTonelada AS 'Capacidade do Silo em toneladas',
+    lm.statusSensor AS 'Status do Sensor',
+    lm.dtInstalacao AS 'Data de Instalação do Sensor',
+    lm.dtManutencao AS 'Data de Manutenção do Sensor',
+    e.dtCadastro AS 'Data de Cadastro da Empresa'
+FROM 
+    usuario AS u 
+JOIN empresa AS e ON e.fkUsuario = u.idUsuario
+JOIN silo AS s ON s.fkEmpSilo = e.idEmpresa
+JOIN sensor AS lm ON lm.fkSilo = s.idSilo;
