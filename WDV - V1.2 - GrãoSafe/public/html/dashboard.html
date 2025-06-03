@@ -41,17 +41,17 @@
                     <div class="grafico">
                         <h1 class="tituloPrinc">Dashboard GrãoSafe</h1>
                         <div class="grafico-caixa-pai">
-                            <div>
-                                <div class="temp-media-atual">
+                            
+                            <div class="kpis_container">
                                     
                                     <div class="grafico-caixa">
                                         <h1 class="tituloDiario">Temperatura média diária</h1>
-                                        <h2 class="temp-media" id="temp_atual">23°C</h2>
+                                        <h2 class="temp-media" id="temp_atual_media"></h2>
                                     </div>
                                     
                                     <div class="grafico-caixa">
                                         <h1 class="tituloAlerta">Alertas totais diários</h1>
-                                        <h2 class="alertas" id="alertas">10</h2>
+                                        <h2 class="alertas" id="alerta_kpi">0</h2>
                                     </div>
                                     
                                     <div class="grafico-caixa">
@@ -59,14 +59,12 @@
                                         <h2 class="temp-atual" id="temp_atual">27°C</h2>
                                     </div>
                                     
-                                </div>
-
-
                             </div>
+
 
                             <div class="caixa_principal">
                                 <div class="caixa_dash2">
-                                    <canvas id="Grafico3" class="grafico3" style="height: 200px; width: 100%; background-color: rgb(209, 203, 203);"></canvas>
+                                    <canvas id="Grafico3" class="grafico3" style="height: 200px; width: 100%; background-color: rgb(209, 203, 203);  border-radius: 6px;"></canvas>
                                 </div>
                                 <div class="caixa_dash1">
                                     
@@ -103,141 +101,192 @@
 </div>
 </body>
 </html>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+let graficoLinha = null;
 
-const Grafico1 = document.getElementById('Grafico1');
-const Grafico2 = document.getElementById('Grafico2');
-const Grafico3 = document.getElementById('Grafico3');
+window.onload = () => {
+    atualizarGraficoTemp();
+    criarGraficoPizza();
+    criarGraficoBarras();
+};
 
+// Atualiza somente os dados do gráfico de linha
 
-var contador = 1
-window.onload = function cont() {
-    if (contador > 0) {
+let dadosTemperaturaMédia = [];
+var soma = 0;
+var alertas = 0
+let dadosTemperatura = [];
+let labelsTempo = [];
 
-
+function atualizarGraficoTemp() {
     fetch("/dashboard/temperaturaAtual")
         .then(res => {
-            if(!res.ok) {
-                throw new Error(`Erro na resposta da temperaturaAtual: ${res.status}`)
-            }
-            return res.json()
+            if (!res.ok) throw new Error(`Erro: ${res.status}`);
+            return res.json();
         })
         .then(temperaturaAtual => {
-            console.log('Temperatura:', temperaturaAtual)
-            const temp_atual = temperaturaAtual.map(item => item.temperatura)
-            const GraficoLinhas = new Chart(Grafico1, {
-                type: 'line',
-                data: {
-                    labels: ['06:00','07:00','08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00'],
-                    datasets: [{
-                        label: 'Temperatura' ,
-                        data: temp_atual,
-                        backgroundColor: ['#DB6901'],
-                        borderColor: ['#DB6901'],
-                        borderWidth: 5,
+            const ultimoRegistro = temperaturaAtual[temperaturaAtual.length - 1];
 
-                        barThickness: 5,
-                    }]
-                },
-                options: {
-                    devicePixelRatio: 5,
-                       maintainAspectRatio: false,
-                    responsive: false,
-                    
-                    plugins: {
-                        legend: {
-                            display: true,
-                            labels: {
-                                font: {
-                                    size: 15
+            // ADICIONANDO DADOS QUE VEM DA API DENTRO DOS VETORES
+            if (!ultimoRegistro) return;
+            dadosTemperatura.push(ultimoRegistro.temperatura);
+            labelsTempo.push(formatarHora(ultimoRegistro.dtHora));
+
+            // EXCLUINDO DADOS MAIS ANTIGOS DE DENTRO DOS VETORES
+            if (dadosTemperatura.length > 10) {
+                dadosTemperatura.shift();
+                labelsTempo.shift();
+            }
+
+            if (!graficoLinha) {
+                const ctx1 = document.getElementById('Grafico1').getContext('2d');
+                graficoLinha = new Chart(ctx1, {
+                    type: 'line',
+                    data: {
+                        labels: labelsTempo,
+                        datasets: [{
+                            label: 'Temperatura',
+                            data: dadosTemperatura,
+                            backgroundColor: '#DB6901',
+                            borderColor: '#DB6901',
+                            borderWidth: 3,
+                            fill: false
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                labels: {
+                                    font: { size: 15 }
                                 }
                             }
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                            
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
                         }
                     }
+                });
+                
+            } else {
+                // ATIALIZANDO OS DADOS DE DENTRO DO GRAFICO
+                graficoLinha.data.labels = labelsTempo;
+                graficoLinha.data.datasets[0].data = dadosTemperatura;
+                graficoLinha.update();
+                kpis()
+                temperaturaAtual
+            }
+
+            setTimeout(atualizarGraficoTemp, 5000); // Atualiza a cada 5 segundos
+
+
+            function kpis(){
+                var temperaturaAtual = ultimoRegistro.temperatura
+                if(temperaturaAtual > 30){
+                    console.log('AELRTA DE TEMPERATURA!', temperaturaAtual )
+                    alertas += 1
+                    console.log(alertas)
+                    alerta_kpi.innerHTML = `${alertas}`
                 }
-            });
-            contador += 1 ;
-            setTimeout(cont,2500)
-            setTimeout(destroy,5000)
-            function destroy(){
-                GraficoLinhas.destroy()
-                cont()
+
+               
+                dadosTemperaturaMédia.push(temperaturaAtual);
+                console.log('Cauculando temeperatura',dadosTemperaturaMédia)
+
+                for(i = 0 ; i <= dadosTemperaturaMédia.length ; i++){
+                    console.log('somando:',soma,'+',dadosTemperaturaMédia)
+                    soma += dadosTemperaturaMédia[i]
+
+                    if ( i = dadosTemperaturaMédia.length ){
+                        var resultado = soma / i 
+                    }
+                    
+                }
+
+                
+                temp_atual_media.innerHTML = `${resultado.toFixed(2)}°C`
+                temp_atual.innerHTML = `${temperaturaAtual}°C`
             }
         })
-    }
+        .catch(err => {
+            console.error("Erro ao buscar temperatura:", err);
+            setTimeout(atualizarGraficoTemp, 2500);
+        });
+
+
+}
+// FORMATANDO DATA E HORA
+function formatarHora(dataHoraString) {
+    const data = new Date(dataHoraString);
+    return data.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+}
+
+window.onload = atualizarGraficoTemp;
+function criarGraficoPizza() {
+    const ctx2 = document.getElementById('Grafico2').getContext('2d');
+    const dadosPizza = [12, 5]; 
+
+    new Chart(ctx2, {
+        type: 'doughnut',
+        data: {
+            labels: ['Dias acima de 30°C', 'Dias entre 24°C e 26°C'], 
+            datasets: [{
+                data: dadosPizza,
+                backgroundColor: ['rgb(10, 84, 54)', '#DB6901'],
+                borderColor: ['rgba(255, 99, 132, 1)', 'rgba(75, 192, 192, 1)']
+            }]
+        },
+        options: {
+            responsive: false,
+            plugins: {
+                legend: {
+                    labels: {
+                        font: { size: 15 }
+                    }
+                }
+            }
+        }
+    });
+}
+
+function criarGraficoBarras() {
+    const ctx3 = document.getElementById('Grafico3').getContext('2d');
+    new Chart(ctx3, {
+        type: 'bar',
+        data: {
+            labels: ['06:00','07:00','08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00'],
+            datasets: [{
+                label: 'Temperatura',
+                data: [17, 17, 19, 20, 20, 23, 31, 27, 29, 25, 27],
+                backgroundColor: '#DB6901',
+                borderColor: '#DB6901',
+                borderWidth: 1,
+                barThickness: 40
+            }]
+        },
+        options: {
+            responsive: false,
+            plugins: {
+                legend: {
+                    labels: {
+                        font: { size: 15 }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
 }
 
 
 
-
-
-    Grafico2 = new Chart(Grafico2, {
-        type: 'doughnut',
-    data: {
-        labels: ['Dias acima de 30°C', 'Dias entre 24°C e 26°C'], 
-        datasets: [{
-            data: kkkk,
-            backgroundColor: [ 'rgb(10, 84, 54)', '#DB6901'],
-            borderColor: ['rgba(255, 99, 132, 1)', 'rgba(75, 192, 192, 1)']
-        }]
-    },
-    options: {
-        responsive: false,
-        plugins: {
-            legend: {
-                display: true,
-                labels: {
-                                font: {
-                                    size: 15
-                                }
-                            }
-                
-            }
-        }
-    }
-});
-Grafico1 = new Chart(Grafico3, {
-                type: 'bar',
-                data: {
-                    labels: ['06:00','07:00','08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00'],
-                    datasets: [{
-                        label: 'Temperatura' ,
-                        data: [17, 17,19,20,20,23,31,27,29,25,27],
-                        backgroundColor: ['#DB6901'],
-                        borderColor: ['#DB6901'],
-                        borderWidth: 1,
-                        barThickness: 40,
-                    }]
-                },
-                options: {
-                    responsive: false,
-                    
-                    plugins: {
-                        legend: {
-                            display: true,
-                            labels: {
-                                font: {
-                                    size: 15
-                                }
-                            }
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                            
-                        }
-                    }
-                }
-            });
-
-
-
-
 </script>
+
