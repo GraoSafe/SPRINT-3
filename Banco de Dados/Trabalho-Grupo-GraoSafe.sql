@@ -62,7 +62,15 @@ CREATE TABLE medida (
     fkSensor INT NOT NULL, -- ID do sensor que fez a medição
     CONSTRAINT fkSensor FOREIGN KEY (fkSensor) REFERENCES sensor(idSensor) -- Chave estrangeira para o sensor
 );
-
+-- CRIAÇÃO DA TABELA ALERTA
+CREATE TABLE alerta(
+    idAlerta INT primary key auto_increment,
+    fkSensor INT,
+    tempAlerta FLOAT,
+    dtAlerta DATETIME DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fkSensorAlerta FOREIGN KEY (fkSensor) REFERENCES sensor(idSensor)
+);
+ 
 -- INSERÇÃO DE DADOS NA TABELA USUARIO (Cliente)
 INSERT INTO usuario (nome, email, senha, telefone) VALUES
 ('João Silva', 'joao@empresa.com', 'senha123', '11999999999'),
