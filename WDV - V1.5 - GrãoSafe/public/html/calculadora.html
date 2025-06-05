@@ -5,78 +5,75 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simulador Financeiro</title>
-    <link rel="stylesheet" href="../css/simulador.css">
     <link href='https://fonts.googleapis.com/css?family=Jost' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet'>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Inclusão da biblioteca Chart.js -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
+    <link rel="stylesheet" type="text/css" href="../css/calculadora.css">
 </head>
 
 <body>
 
-    <div class="logo">
-        <img src="../Imagens/GraoSafe.png">
-    </div>
+    <div class="navzona">
 
-    <a href="./login.html" style="text-decoration: none;">
-        <div class="login border login-button" style="cursor: pointer;">
-            <span style="color: #FAF2FF;"><b>Login</b></span>
+        <div class="logo">
+            <img src="../Imagens/GraoSafe.png" alt="">
         </div>
-    </a>
 
-    <div class="navbar">
-        <b>
+        <a href="./login.html">
+            <div class="login border login-button">
+                <span><b>Login</b></span>
+            </div>
+        </a>
+
+        <b class="navbar">
+            
             <a href="./home.html"><span>Home</span></a>
             <a href="./calculadora.html"><span>Simulação</span></a>
         </b>
+        
     </div>
 
-    <div class="input-local">
+    <div class="simulador-container"><div class="input-local">
         <div class="title main-color">
-            <h1 class="title"> Simulador Financeiro </h1>
+            <h1 class="title">Simulador Financeiro</h1>
         </div>
         <div class="sub-title">
-            <h2 class="sub-title"> Calcule aqui a estimativa de perda de sua produção de grãos de soja por mal armazenamento:</h2> <br>
+            <h2 class="sub-title">Calcule aqui a estimativa de perda de sua produção de grãos de soja por mal armazenamento:</h2> <br>
         </div>
 
         <div class="input-style">
-            Digite o nome da sua empresa:
+            Digite o nome da sua empresa: <br>
             <input type="text" id="input_nome" placeholder="Digite o nome" class="input-type"> <br> <br>
 
-            Digite a quantidade de toneladas armazenadas em seus silos:
+            Digite a quantidade de toneladas armazenadas em seus silos: <br>
             <input type="number" id="input_toneladas" placeholder="Digite o valor" class="input-type"> <br> <br>
 
-            Digite a cotação da saca de soja atual:
+            Digite a cotação da saca de soja atual: <br>
             <input type="number" id="input_saca" placeholder="Digite o valor" class="input-type"> <br> <br>
         </div>
         
         <button onclick="analisePerda()" class="calc-button">Análise de Safra</button><br> <br>
+
     </div>
-    <div class="onda"></div>
 
+        
 
-    <!-- Container para o gráfico -->
-     
-    
-    <!--<div class="nome-div">${nomeEmpresa}</div>-->
-    <center>
-    <div id="mensagem_nome" class="nome-empre">          </div>
-    </center>   
-    
-    <div id="mensagem_principal" class="msg-princ"> 
+        <div class="mensagens"> 
+            <center><div id="mensagem_nome" class="nome-empre"></div>
+            
+            <div id="mensagem_principal" class="msg-princ">Seus resultados aparecerão aqui:</div></center>
+        </div>
 
 </body> 
 </html>
-
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js">
 
 </script>
-
 <script>
-    // var myChartInstance = null; // Variável global para armazenar a instância do gráfico
 
     function analisePerda() {
+
         var nomeEmpresa = document.getElementById("input_nome").value;
         var qtdToneladas = Number(document.getElementById("input_toneladas").value);
         var valorSaca = Number(document.getElementById("input_saca").value);
@@ -95,7 +92,7 @@
         },
       }).showToast();
             return;
-        }
+        } 
 
         // Cálculos de receita, perdas, etc...
         var perdaReal = (qtdToneladas * 0.15) * valorSaca;//Calculo da perda por mal armazenamento
@@ -114,93 +111,35 @@
         var receitaLqCorrigida = receitaBruta - perdaCorrigida; // Cálculo da receita LIQUIDA final após a redução da perda.
         var difReceitas = receitaLqCorrigida - receitaLiquida;//Calculo da diferença das receitas 
 
+
         mensagem_nome.innerHTML= `<div class="nome-div">${nomeEmpresa}</div>`
         mensagem_principal.innerHTML = `
 
-        <div class="info-box4">Receita líquida total:
+        <div class="info-box4">Lucro após perdas (estimado):
             <b>R$${receitaLiquida.toLocaleString('pt-br', {minimumFractionDigits:2})}</b><br>
-            Receita líquida corrigida:
+            Lucro com perdas reduzidas:
             <b>R$${receitaLqCorrigida.toLocaleString('pt-br', {minimumFractionDigits:2})}</b><br>
-            Aumento de receita líquida:
+            Diferença de ganho estimado:
             <b style="color: green">R$${difReceitas.toLocaleString('pt-br', {minimumFractionDigits:2})}</b> </div>
 
         <div class="info-box3"> Receita bruta por saca(60kg):
             <b>R$${ganhoPorTonelada.toLocaleString('pt-br', {minimumFractionDigits:2})}</b><br>
-            Receita bruta total:
+            Receita total (antes das perdas):
             <b>R$${receitaBruta.toLocaleString('pt-br', {minimumFractionDigits:2})}</b></div>
         
-        <div class="info-box2"> Perda real por armazenamento inadequado: 
+        <div class="info-box2"> Prejuízo estimado com más condições: 
             <b>R$${perdaReal.toLocaleString('pt-br', {minimumFractionDigits:2})}</b><br> 
             Perda corrigida (reduzida a 7,5%): 
             <b> R$${perdaCorrigida.toLocaleString('pt-br', {minimumFractionDigits:2})}</b> </div>
         
-        <div id="div_mensagem_ton" class="div_msg_ton"></div>
+        
         <div class="info-box">
         A perda média de grãos por armazenamento inadequado, no Brasil, segundo a Companhia Nacional de Abastecimento
         (Conab/2023), é de <b>15%</b>. <br> <br>
         </div>
-        <div id="div_ton_saca" class="ton-saca"></div>
+
         </div>
         <div id="div_mensagem_perda"></div>
         <div id="div_mensagem_resultado"></div>`
-        
-        // Exibição dos resultados
-        document.getElementById("div_mensagem_ton").innerHTML += `
-            Nome da Empresa: <b>${nomeEmpresa}</b><br> 
-            Quantidade de toneladas: <b>${qtdToneladas} toneladas</b><br> 
-            Valor da saca: <b>R$${valorSaca.toFixed(2)}</b>
-        `;/*
-        document.getElementById("div_mensagem_resultado").innerHTML += `
-            Receita total: <b>R$${receitaTotal.toFixed(2)}</b><br> 
-            Perda Absoluta: <b>R$${perdaAbsoluta.toFixed(2)}</b>
-        `;
-        */
-        // // Atualiza o gráfico com os novos dados
-        
-        // updateChart(perdaReal, perdaCorrigida);
-        // window.scrollBy({
-        //     top: 800, // Quantidade de pixels a rolar
-        //     behavior: "smooth" 
-        // });
-        // }
-    
-
-    // function updateChart(perdaReal, perdaCorrigida) {
-    //     var ctx = document.getElementById('myChart').getContext('2d');
-
-    //     // Se já houver um gráfico desenhado, destrua-o antes de criar um novo
-    //     if (myChartInstance) {
-    //         myChartInstance.destroy();
-    //     }
-
-    //     // Criar novo gráfico
-    //     myChartInstance = new Chart(ctx, {
-    //         type: 'bar',
-    //         data: {
-    //             labels: ['Perda Real','Perda Corrigida'],
-    //             datasets: [{
-    //                 label: 'Perdas em R$',
-    //                 data: [perdaReal, perdaCorrigida],
-    //                 backgroundColor: ['rgb(253, 43, 86, 0.8)', 'rgba(75, 192, 192, 0.8)'],
-    //                 borderColor: ['rgba(255, 99, 132, 1)', 'rgba(75, 192, 192, 1)'],
-    //                 borderWidth: 1,
-    //                 barThickness: 100,
-    //             }]
-    //         },
-    //         options: {
-    //             responsive: true,
-    //             plugins: {
-    //                 legend: {
-    //                     display: true
-    //                 }
-    //             },
-    //             scales: {
-    //                 y: {
-    //                     beginAtZero: true
-    //                 }
-    //             }
-    //         }
-    //     });
-    //
-     }
+    }
 </script>
