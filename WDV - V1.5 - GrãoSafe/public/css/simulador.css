@@ -1,0 +1,345 @@
+/* Ajustes no layout para garantir que o gráfico fique centralizado e responsivo */
+html{
+    scroll-behavior: smooth;
+}
+
+body{
+    font-family: 'Roboto';
+    background-color:  #f9f9f9;
+    margin: 0;
+    width: 100%;
+}
+.msg-princ{
+    display: flex;
+    justify-self: center;
+    flex-direction: column;
+    margin: 10px;
+}
+.info-cliente{
+    flex-wrap:wrap 1;
+}
+
+.main-color {
+    color: #0A5436;
+}
+
+.center {
+    align-self: auto;
+}
+
+.border {
+    border-radius: 5px;
+}
+.navbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 20px;
+}
+
+.navbar a {
+    color: rgb(114, 114, 114);
+    text-align: center;
+    text-decoration: none;
+    font-size: 30px;
+    padding: 14px 20px;
+    margin: 0 15px;
+    padding-bottom: 0px;
+}
+
+.navbar a:hover {
+    color: rgb(240, 91, 37);
+    font-size: 33px;
+    transition: all 0.3s ease-in-out;
+}
+
+.login a{
+    text-decoration: none;
+}
+
+.title {
+    font-size: 50px;
+    font-weight: bold;
+    color: #DB6901
+}
+
+.sub-title{
+color: #4E504D;
+margin-top: 0;
+font-size: 25px;
+align-items: center;
+justify-content: center;
+}
+
+.input-style {
+    padding-bottom: 10px;
+    font-size: 25px;
+    font-weight: 550;
+    color: #4E504D;
+
+}
+.input-type {
+    background-color: #f9f9f9;
+    border: solid 2px #999999;
+    border-radius: 10px;
+    
+    height: 40px;
+    font-size: 60%;
+    color: #4E504D;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+.logo {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.logo img {
+    height: 15%;
+    width: 15%;
+}
+
+.login {
+    color: #0A5436;
+    position: absolute;
+    top: 35px;
+    right: 85px;
+    height: fit-content;
+    width: fit-content;
+    font-size: 25px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 50px;
+    padding-right: 50px;
+    transition: background-color 0.3s;
+}
+.login {
+    background-color: #0A5436;
+}
+.login-button:hover {
+    background-color: #DB6900;
+}
+.input-local {
+    text-align: center;
+    margin: 0;
+    width: 100%;
+
+    background-color:#f9f9f9;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+}
+
+.background-sheet {
+    background: fixed;
+}
+.sub-tittle {
+    font-size: 20px;
+}
+.calc-button {
+    background-color: #0A5436;
+    color: #FFFFFF;
+    cursor: pointer;
+
+    margin: 5px 0;
+    width: 30%;
+    padding: 15px;
+    font-size: 20px;
+
+    border-top-right-radius: 25px;
+    border-bottom-left-radius: 25px;
+    border: 1px solid #FFFFFF;
+}
+
+.calc-button:hover {
+    background-color: #DB6900;
+    transition: background-color 0.3s;
+}
+
+.onda {
+    padding: 10;
+    width: 100%;
+    height: 140px;
+
+    background-color: #0A5436;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    clip-path: polygon(0% 0%, 100% 0%, 100% 80%, 75% 100%, 50% 80%, 25% 100%, 0% 80%);
+
+}
+
+.div_msg_ton {
+    position: absolute;
+    z-index: -2;
+    top: 1200px;
+    right: 400px;
+    left: 400px;
+
+    font-size: 30px;
+    padding-top: 50px;
+    border-radius: 5px;
+    color: #FFFFFF;
+}
+
+.ton-saca {
+    top: 20px;
+    height: fit-content;
+    width: fit-content;
+    border: solid 1px #4E504D;
+    background-color: #f9f9f9;
+}
+
+.chart-container {
+    width: 1220px;
+    margin: 20px auto;
+    padding: 20px;
+
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    border: solid 5px #FFFFFF;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+
+
+}
+.info-box {
+    padding-top: 10px;
+    width: 700px;
+    height: 150px;
+    margin: 20px auto;
+    text-align: center;
+
+    border: solid 5px #FFFFFF;
+    background-color: #FFFFFF;
+
+    font-size: 30px;
+    border-radius: 9px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    justify-content: center;
+    align-items: center;
+}
+
+.info-box2 {
+    padding-top: 5px;
+    width: 1200px;
+    height: fit-content;
+    margin: 20px auto;
+    text-align: center;
+    border: solid 5px #FFFFFF;
+    background-color: #FFFFFF;
+
+    font-size: 30px;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+
+}
+
+.info-box3 {
+    padding-top: 5px;
+    width: 1200px;
+    height: fit-content;
+    margin: 20px auto;
+    text-align: center;
+    border: solid 5px #FFFFFF;
+    background-color: #FFFFFF;
+
+    font-size: 30px;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+
+}
+
+.info-box4 {
+    padding-top: 5px;
+    width: 1200px;
+    height: fit-content;
+    margin: 20px auto;
+    text-align: center;
+    border: solid 5px #FFFFFF;
+    background-color: #FFFFFF;
+
+    font-size: 30px;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+
+}
+
+.container-grafico{
+    height: 1000px;
+    border: solid 3px #4E504D;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.nome-grafico{
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    flex-direction: column;
+
+    height: fit-content;
+    width: fit-content;
+
+    text-align: center;
+    align-self: center;
+
+    font-size: 25px;
+
+    border: #0A5436;
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+
+    padding-top: 7px;
+    padding-bottom: 7px;
+    padding-right: 40px;
+    padding-left: 40px;
+
+    background: linear-gradient(to bottom #FFFFFF 0%,#4E504D 80%, #999999 100%);
+    color:#4E504D;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+.nome-div{
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    flex-direction: column;
+
+    margin-top: 20px;
+    height: fit-content;
+    width: fit-content;
+    text-align: center;
+    align-self: center;
+    font-size: 50px;
+
+    border: #0A5436;
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 40px;
+    padding-left: 40px;
+    background: linear-gradient(to bottom, #FFFFFF 0%,#FFFFFF 80%, #FFFFFF 100%);
+    color:#0A5436;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+canvas {
+    width: 100%;
+    height: 300px;
+}
+
+::-webkit-scrollbar{
+    width: 10px;
+    background-color:#FAF2FF;
+}
+
+::-webkit-scrollbar-thumb{
+    background-color: #0A5436;
+    border-radius: 5px;
+}

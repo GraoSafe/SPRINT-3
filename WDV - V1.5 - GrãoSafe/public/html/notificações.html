@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/notificações.css">
+    <link href='https://fonts.googleapis.com/css?family=Jost' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet'>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
+    <title>GrãoSafe</title>
+
+</head>
+<body>
+
+    <div class="container">
+            <div class="sidebar"> 
+                <div class="usuario">
+                    <img src="../Imagens/usuario.png" class="img">
+                </div>
+                <div class="navbar-log">
+                <b>
+                <a href="dashboard.html"><span class="tsize1">Dashboards</span></a>
+                <a href="#"><span class="tsize2">Sensores</span></a>
+                <a href="#"><span class="tsize4">Suporte</span></a>
+                <a href="#"><span class="tsize3">Notificações</span></a>
+                </b>
+            </div>
+            
+            <div class="sair">
+                <b>
+                <a href="home.html"><span class="tsize">Sair</span></a>
+                </b>
+            </div>
+        </div>
+
+             <div class="conteudo2" id="alertasDiv">
+                    <h1 class="tituloNot">Notificações</h1></h2>  
+ 
+                </div>
+        </div>
+
+</body>
+</html>
+<script>
+
+fetch("/dashboard/alertasLista")
+    .then(res => res.json())
+    .then(alertasLista => {
+        const alertasDiv = document.getElementById("alertasDiv");
+
+        for (let i = 0; i < alertasLista.length; i++) {
+            const dataBruta = alertasLista[i].dtAlerta;
+            const dataObj = new Date(dataBruta);
+
+            const dataFormatada = dataObj.toLocaleString("pt-BR", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit"
+            });
+
+            alertasDiv.innerHTML += `
+                <div class="divAlerta">
+                   <h2> <img src="../Imagens/alerta3.webp"> ALERTA DE TEMPERATURA</h2> TEMPERATURA -${alertasLista[i].tempAlerta} | DATA: ${dataFormatada}
+                </div>
+                `;
+        }
+    })
+    .catch(function (erro) {
+        console.error("Erro na requisição:", erro);
+        console.error("Erro ao tentar conectar. Tente novamente.");
+    });
+
+
+
+
+
+
+
+
+//     var Grafico3 = document.getElementById('Grafico3');
+//     var Grafico4 = document.getElementById('Grafico4');
+
+//     Grafico3 = new Chart(Grafico3, {
+//     type: 'bar',
+//     data: {
+//         labels: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+//         datasets: [{
+//             label: 'Quantidade de alertas por mês',
+//             data: [17, 17,10,5,6,4,4,5,12,8,12,19],
+//             backgroundColor: ['#DB6901', 'rgb(10, 84, 54)'],
+//             borderColor: ['rgba(255, 99, 132, 1)', 'rgba(75, 192, 192, 1)'],
+//             borderWidth: 1,
+//             barThickness: 20,
+//         }]
+//     },
+//     options: {
+//         responsive: true,
+//         plugins: {
+//             legend: {
+//                 display: true,
+//                 labels: {
+//                         font: {
+//                         size: 10
+//                         }
+//                     }
+//             }
+//         },
+//         scales: {
+//             y: {
+//                 beginAtZero: true
+//             }
+//         }
+//     }
+// });
+
+//    Grafico4 = new Chart(Grafico4, {
+//                 type: 'line',
+//                 data: {
+//                     labels: ['06:00','07:00','08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00'],
+//                     datasets: [{
+//                         label: 'Quantidade de alertas por hora' ,
+//                         data: [10, 7,5,8,9,3,4,7,2,1,1],
+//                         backgroundColor: ['#DB6901'],
+//                         borderColor: ['#DB6901'],
+//                         borderWidth: 2,
+//                         barThickness: 100,
+//                     }]
+//                 },
+//                 options: {
+//                     responsive: true,
+                    
+//                     plugins: {
+//                         legend: {
+//                             display: true,
+//                             labels: {
+//                                 font: {
+//                                     size: 10
+//                                 }
+//                             }
+//                         }
+//                     },
+//                     scales: {
+//                         y: {
+//                             beginAtZero: true
+                            
+//                         }
+//                     }
+//                 }
+//             });
+</script>

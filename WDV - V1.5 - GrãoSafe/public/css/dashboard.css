@@ -1,0 +1,404 @@
+body {
+  overflow: hidden;
+  font-family: Roboto, sans-serif;
+  top:0;
+  margin: 0;
+  height: auto;
+  width: 100%;
+  }
+
+.container {
+  display: flex;
+  flex-direction: row;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  margin: -10px 0px -10px -10px
+}
+
+.usuario img{
+  height: 100px;
+  width: 100%;
+  padding: 0px 0px 10px 0px;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  background-image: linear-gradient(to bottom right,rgb(240, 91, 37), rgb(231, 118, 77),  rgb(230, 66, 6) );
+  width: 450px;
+  padding: 25px;
+  margin-bottom: -10px;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
+
+.navbar-log a,
+.sair a {
+  color: black;
+  font-size: 20px;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+}
+
+.navbar-log a:hover,
+.sair a:hover {
+  color: rgb(182, 56, 11);
+  font-size: 22px;
+}
+
+.conteudo {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  /* flex-grow: 1; */
+  padding: 30px;
+  /* overflow-y: auto; */
+}
+
+/* FUNÇÕES DO NAVBAR CENTRO FUTURO */
+/* .navbar-centro{
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: space-evenly;
+}
+
+.navbar-centro a {
+  background-color:  #CDD6CB;
+  color: rgba(27, 28, 29);
+  font-size: 25px;
+  text-decoration: none;
+  padding: 15px;
+  border-radius: 4px;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
+
+.navbar-centro a:hover{
+background-color: rgb(240, 91, 37);
+} */
+
+.grafico {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.grafico-caixa{
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+height: 136px;
+width: 140px;
+background-color: rgb(209, 203, 203);
+/* /* margin: 10px 0px 30px 60px; */
+padding: 20px 40px 40px 30px;
+border-radius: 4px;
+filter: drop-shadow(5px 7px 5px grey);
+}
+
+.grafico-caixa1{
+display: flex;
+flex-direction: column;
+height: 450px;
+width: 600px;
+
+background-color: rgb(209, 203, 203);
+/* margin: 150px 0px 0px 50px; */
+padding: 10px 20px 20px 15px;
+border-radius: 4px;
+filter: drop-shadow(5px 7px 5px grey);
+padding-bottom: 30px;
+}
+
+.grafico-caixa1 h3{
+  margin: 0;
+}
+.grafico-caixa-barras{
+  display: flex;
+  flex-direction: column;
+  height: 310px;
+  width: 100%;
+
+  background-color: rgb(209, 203, 203);
+  /* margin: 150px 0px 0px 50px; */
+  padding: 10px 20px 20px 15px;
+  border-radius: 4px;
+  filter: drop-shadow(5px 7px 5px grey);
+}
+.caixa_principal{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: end; 
+}
+.caixa_dash1{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: end;
+  height: 90%;
+}
+.caixa_dash2{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 20%;
+  background-color: rgb(209, 203, 203);
+  margin: 0px 0px 20px 0px;
+  padding: 0px 0px 29px 0px;
+  border-radius: 6px;
+  filter: drop-shadow(5px 7px 5px grey); 
+  width: 100%;
+  height: 180px;
+
+
+}
+.grafico-caixa-2{
+padding: 10px;
+height: 200px;
+width: 180px;
+border-radius: 4px;
+background-color:rgb(209, 203, 203);
+margin-bottom: 100px;
+filter: drop-shadow(5px 7px 5px grey);
+}
+
+.grafico-caixa-pizza{
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+height: 490px;
+width: 400px;
+/* /* padding: 40px 20px 150px 20px; */
+margin: 0px 0px 0px 20px;
+/* margin-bottom: 20px; */
+background-color: rgb(209, 203, 203);
+border-radius: 4px;
+filter: drop-shadow(5px 7px 5px grey);
+}
+.grafico-caixa-pizza h1{
+margin:0;
+}
+  
+.kpis_container{
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+height: fit-content;
+margin: 20px 20px 0px 0px;
+width: fit-content;
+height: fit-content;
+gap: 65px;
+}
+
+.grafico-caixa-pai{
+display: flex;
+justify-content: center;
+align-items: end;
+flex-direction: row;
+align-content: space-between;
+width: 95%;
+border-radius: 10px;
+height: 730px;
+padding-bottom: 20px;
+padding-top: 10px;
+background-color: rgb(179, 179, 179);
+}
+
+.grafico h2 {
+  color: #2b2b2b;
+  font-size: 20px;
+}
+
+/*Temperatura Atual Numero*/
+.temp-atual{
+font-family: 'Roboto';
+font-size: 25px;
+font-weight: bold;
+text-align: center;
+justify-content:  center;
+margin: 10px;
+color: rgb(255, 145, 0);
+}
+
+.temp-media{
+font-family: 'Roboto';
+font-size: 25px;
+font-weight: bold;
+text-align: center;
+justify-content: center;
+margin: 10px;
+color: green;
+}
+
+.alertas{
+font-family: 'Roboto';
+font-size: 25px;
+font-weight: bold;
+text-align: center;
+justify-content:  center;
+margin: 10px;
+color: rgb(255, 145, 0);
+}
+
+/*Caixa dos Botoẽs*/
+.silo-button{
+position: absolute;
+top: 20px;
+left: 300px;
+
+display: flex;
+flex-direction: column;
+
+justify-self: center;
+align-self: center;
+padding: 50px;
+padding-top: 10px;
+
+background-color: #cdd6cbc4;
+text-align: center;
+border-radius: 15px;
+
+width: fit-content;
+
+z-index: 2;
+}
+/*Texto dos Botões*/
+.silo-button p{
+font-size: 30px;
+margin: 10px;
+}
+/*Orientação dos Botões*/
+.silo-button .botoes{
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+gap: 20px;
+}
+/*Estilização dos Botões*/
+.botoes button{
+height: 70px;
+width: 70px;
+font-size: 22px;
+
+font-family: 'Roboto';
+font-weight: bolder;
+
+border: 2px ;
+border-radius: 10px;
+background-color: rgb(136, 185, 155);
+}
+.botoes .total{
+width: 130px;
+height: 80px;
+background-color: rgb(112, 170, 112); 
+font-size: 25px; 
+font-family: Roboto;
+}
+
+
+
+.grafico1 {
+font-size: 220px;
+background-color: rgba(255, 255, 255, 0.363);
+font-family: 'Roboto';
+border-radius: 15px;
+}
+
+.tituloPrinc{
+display: flex;
+/* color:#2b2b2b; */
+font-family: 'Roboto';
+font-size: 30px;
+color:#DB6901;
+margin: 0;
+padding: 7px 7px 10px 7px;
+border-radius: 20px 20px 0px 0px;
+background-color: #c7c7c7;
+}
+
+.tituloDiaria{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Roboto';
+  color: #2b2b2b;
+  font-size: 20px;
+}
+
+.tituloAtual{
+  display: flex;
+  color:#2b2b2b;
+  font-size: 20px;
+  font-family: 'Roboto';
+}
+
+.tituloDiario{
+  display: flex;
+  color: #2b2b2b;
+  font-size: 20px;
+  font-family: 'Roboto';
+  justify-content: center;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+
+.tituloAlerta{
+  display: flex;
+  color: #2b2b2b;
+  font-size: 20px;
+  font-family: 'Roboto';
+  justify-content: center;
+  align-items: center;
+}
+
+.tituloMensal{
+  display: flex;
+  color: #2b2b2b;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+}
+
+.tsize{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 40px 75px 0px 0px;
+}
+
+.tsize1{
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-bottom: 50px;
+}
+
+.tsize2{
+display: flex;
+margin-bottom: 55px;
+}
+
+.tsize3{
+display: flex;
+margin-top: 50px;
+}
