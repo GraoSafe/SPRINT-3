@@ -178,16 +178,23 @@ filter: drop-shadow(5px 7px 5px grey);
 .grafico-caixa-pizza{
 display: flex;
 flex-direction: column;
-justify-content: center;
 align-items: center;
 height: 490px;
 width: 400px;
-/* /* padding: 40px 20px 150px 20px; */
+gap: 10px;
 margin: 0px 0px 0px 20px;
-/* margin-bottom: 20px; */
 background-color: rgb(209, 203, 203);
 border-radius: 4px;
 filter: drop-shadow(5px 7px 5px grey);
+
+overflow: scroll;
+}
+.divAlerta{
+  height: fit-content;
+  background-color: #dc812b;
+  border-radius: 6px;
+  width: 90%;
+  height: 100px;
 }
 .grafico-caixa-pizza h1{
 margin:0;
@@ -217,7 +224,24 @@ height: 730px;
 padding-bottom: 20px;
 padding-top: 10px;
 background-color: rgb(179, 179, 179);
+box-shadow: 0px 0px 20px -1px rgba(0,0,0,1);
+-webkit-box-shadow: 0px 0px 20px -1px rgba(0,0,0,1);
+-moz-box-shadow: 0px 0px 20px -1px rgba(0,0,0,1);
 }
+.alertasContainer{
+  background-color: rgb(209, 203, 203);
+  padding: 10px 10px 10px 20px;
+  border-radius: 4px;
+  filter: drop-shadow(5px 7px 5px grey);
+  height: 700px;
+  
+  position: absolute;
+  z-index: 2;
+  transform: translateY(19%);
+  margin: 0px 0px 10px 680px;
+  
+  overflow: scroll;
+  }
 
 .grafico h2 {
   color: #2b2b2b;

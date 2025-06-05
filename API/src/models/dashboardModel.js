@@ -9,7 +9,7 @@ function temperaturaAtual(){
 }
 function ultimasDezTemperaturas(){
     var instrucao = `
-    select * from medida where fkSensor = 1 ORDER BY dtHora DESC LIMIT 10;
+    select temperatura from medida where fkSensor = 1 ORDER BY dtHora DESC LIMIT 10;
     `
     console.log('EXECUTANDO:',instrucao)
     return database.executar(instrucao)
