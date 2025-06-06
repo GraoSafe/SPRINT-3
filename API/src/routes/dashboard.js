@@ -16,5 +16,8 @@ router.post("/alerta", function(req,res){
 router.get("/alertasLista", function(req,res){
     dashboardController.alertasLista(req,res);
 })
+router.get("/alertaUltimo", function(req,res){
+    dashboardController.alertaUltimo(req,res);
+})
 
 module.exports = router;

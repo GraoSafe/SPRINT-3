@@ -62,13 +62,13 @@
 
                             <div class="caixa_principal">
                                 <div class="caixa_dash2">
-                                    <canvas id="Grafico3" class="grafico3" style="height: 200px; width: 90%; background-color: white;  border-radius: 6px;"></canvas>
+                                    <canvas id="Grafico3" class="grafico3" style="height: 200px; width: 90%; background-color: whitesmoke;  border-radius: 6px;"></canvas>
                                 </div>
                                 <div class="caixa_dash1">
                                     
                                     <div class="grafico-caixa1">
                                         <h3 class="tituloDiaria">Temperatura diária</h1>
-                                            <canvas id="Grafico1" class="grafico1" style="height: 280px; width: 100%;  background-color: white;"></canvas>
+                                            <canvas id="Grafico1" class="grafico1" style="height: 280px; width: 100%;  background-color: whitesmoke;"></canvas>
                                     </div>
                                     
                                     <div class="grafico-caixa-pizza" id="alertasDiv">
@@ -102,10 +102,11 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 let graficoLinha = null;
-
+listarAlertas()
 window.onload = () => {
     atualizarGraficoTemp();
     criarGraficoBarras();
+    listarAlertas();
 };
 
 // Atualiza somente os dados do gráfico de linha
@@ -207,27 +208,11 @@ function atualizarTempCiclo() {
         });
 }
 
-
-function kpis(ultimoRegistro) {
-    const temperaturaAtual = ultimoRegistro.temperatura;
-    if (temperaturaAtual > 30 || temperaturaAtual < 19) {
-        console.log('ALERTA DE TEMPERATURA!', temperaturaAtual);
-        alertas += 1;
-        alerta_kpi.innerHTML = `${alertas}`;
-        
-
-        fetch("/dashboard/alerta", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ tempAlertaServer: temperaturaAtual })
-        })
-        .then(resposta => {
-            if (resposta.ok) console.log('Alerta inserido no banco');
-            else console.log('Erro ao inserir alerta');
-        });
-        fetch("/dashboard/alertasLista")
+function listarAlertas(){
+    fetch("/dashboard/alertasLista")
     .then(res => res.json())
     .then(alertasLista => {
+        console.log('PASSEI AQUI')
         const alertasDiv = document.getElementById("alertasDiv");
 
         for (let i = 0; i < alertasLista.length; i++) {
@@ -245,15 +230,29 @@ function kpis(ultimoRegistro) {
 
             if (alertasLista[i].tempAlerta > 30){
             alertasDiv.innerHTML += `
-                <div class="divAlerta">
-                   <h2> <img src="../Imagens/alerta3.webp" height="18px"> ALERTA - TEMPERATURA ACIMA DO LIMITE</h2> TEMPERATURA -${alertasLista[i].tempAlerta}  DATA: ${dataFormatada}
+                <div class="divAlerta" style="background-color: red; color:white;">
+                   <h2> <img src="../Imagens/alerta3.webp" height="18px"> PERIGO! <br>TEMPERATURA ACIMA DO LIMITE</h2> TEMPERATURA - <h2>${alertasLista[i].tempAlerta}</h2>  DATA: ${dataFormatada}
                 </div>
                 `;
             }
-            if (alertasLista[i].tempAlerta < 19){
+            else if (alertasLista[i].tempAlerta > 27.6){
             alertasDiv.innerHTML += `
-                <div class="divAlerta">
-                   <h2> <img src="../Imagens/alerta3.webp" height="18px"> ALERTA - TEMPERATURA ABAIXO DO LIMITE</h2> TEMPERATURA -${alertasLista[i].tempAlerta}  DATA: ${dataFormatada}
+                <div class="divAlerta" style="background-color: orange; color:white;">
+                   <h2> <img src="../Imagens/alerta3.webp" height="18px"> CUIDADO! TEMPERATURA PERTO DO LIMITE </h2> TEMPERATURA - <h2>${alertasLista[i].tempAlerta}</h2> DATA: ${dataFormatada}
+                </div>
+                `;
+            }
+            else if (alertasLista[i].tempAlerta >20 && alertasLista[i].tempAlerta < 22.5){
+                alertasDiv.innerHTML += `
+                <div class="divAlerta" style="background-color: orange; color:white;">
+                   <h2> <img src="../Imagens/alerta3.webp" height="18px"> CUIDADO! TEMPERATURA PERTO DO LIMITE </h2> TEMPERATURA - <h2>${alertasLista[i].tempAlerta}</h2> DATA: ${dataFormatada}
+                </div>
+                `;
+            }
+            else if (alertasLista[i].tempAlerta < 20){
+            alertasDiv.innerHTML += `
+                <div class="divAlerta" style="background-color: red ; color:white;">
+                   <h2> <img src="../Imagens/alerta3.webp" height="18px"> PERIGO! TEMPERATURA ABAIXO DO LIMITE</h2> TEMPERATURA - <h2>${alertasLista[i].tempAlerta}</h2> DATA: ${dataFormatada}
                 </div>
                 `;
             }
@@ -264,7 +263,78 @@ function kpis(ultimoRegistro) {
         console.error("Erro na requisição:", erro);
         console.error("Erro ao tentar conectar. Tente novamente.");
     });
+}
 
+function kpis(ultimoRegistro) {
+    const temperaturaAtual = ultimoRegistro.temperatura;
+    if (temperaturaAtual) {
+        console.log('ALERTA DE TEMPERATURA!', temperaturaAtual);
+        alertas += 1;
+        alerta_kpi.innerHTML = `${alertas}`;
+        
+        fetch("/dashboard/alerta", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ tempAlertaServer: temperaturaAtual })
+        })
+        .then(resposta => {
+            if (resposta.ok) console.log('Alerta inserido no banco');
+            else console.log('Erro ao inserir alerta');
+        });
+        fetch("/dashboard/alertaUltimo")
+        .then(res => res.json())
+        .then(alertaUltimo => {
+            console.log('PASSEI AQUI')
+            const alertasDiv = document.getElementById("alertasDiv");
+
+            for (let i = 0; i < alertaUltimo.length; i++) {
+                const dataBruta = alertaUltimo[i].dtAlerta;
+                const dataObj = new Date(dataBruta);
+
+                const dataFormatada = dataObj.toLocaleString("pt-BR", {
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    second: "2-digit"
+                });
+                console.log(temperaturaAtual )
+                if (temperaturaAtual > 30){
+                alertasDiv.innerHTML += `
+                    <div class="divAlerta" style="background-color: red; color:white;">
+                    <h2> <img src="../Imagens/alerta3.webp" height="18px"> PERIGO ! <br>TEMPERATURA ACIMA DO LIMITE</h2> TEMPERATURA - <h2>${temperaturaAtual}</h2> <br>  DATA: ${dataFormatada}
+                    </div>
+                    `;
+                }
+                else if(temperaturaAtual > 27.6){
+                alertasDiv.innerHTML += `
+                    <div class="divAlerta" style="background-color: orange; color:white;">
+                    <h2> <img src="../Imagens/alerta3.webp" height="18px"> CUIDADO! TEMPERATURA PERTO DO LIMITE </h2> TEMPERATURA - <h2>${temperaturaAtual}</h2> DATA: ${dataFormatada}
+                    </div>
+                    `;
+                }
+                else if (temperaturaAtual  > 20 && temperaturaAtual  < 22.5){
+                alertasDiv.innerHTML += `
+                <div class="divAlerta" style="background-color: orange; color:white;">
+                   <h2> <img src="../Imagens/alerta3.webp" height="18px"> CUIDADO! TEMPERATURA PERTO DO LIMITE </h2> TEMPERATURA - <h2>${temperaturaAtual }</h2> DATA: ${dataFormatada}
+                </div>
+                `;
+            }
+                else if (temperaturaAtual < 20){
+                alertasDiv.innerHTML += `
+                    <div class="divAlerta" style="background-color: red ; color:white;">
+                    <h2> <img src="../Imagens/alerta3.webp" height="18px"> PERIGO ! <br>TEMPERATURA ABAIXO DO LIMITE</h2> TEMPERATURA - <h2>${temperaturaAtual}</h2> <br> DATA: ${dataFormatada}
+                    </div>
+                    `;
+                }
+
+            }
+        })
+        .catch(function (erro) {
+            console.error("Erro na requisição:", erro);
+            console.error("Erro ao tentar conectar. Tente novamente.");
+        });
     }
     
     dadosTemperaturaMédia.push(temperaturaAtual);

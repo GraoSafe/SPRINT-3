@@ -158,8 +158,8 @@ filter: drop-shadow(5px 7px 5px grey);
 .grafico-caixa-pizza{
 display: flex;
 flex-direction: column;
-justify-content: center;
 align-items: center;
+gap: 25px;
 height: 490px;
 width: 400px;
 /* /* padding: 40px 20px 150px 20px; */
@@ -168,7 +168,20 @@ background-color: whitesmoke;
 border: 1px solid #DB6901;
 border-radius: 4px;
 filter: drop-shadow(5px 7px 5px grey);
+
+overflow: scroll;
+
 }
+.divAlerta{
+border-radius: 10px;
+width: 90%;
+padding: 6px;
+}
+.divAlerta h2{
+color: white;
+font-weight: bolder;
+}
+
 .grafico-caixa-pizza h1{
 margin:0;
 }

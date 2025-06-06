@@ -29,10 +29,18 @@ function alertasLista(){
     console.log('EXECUTANDO:',instrucao)
     return database.executar(instrucao)
 }
+function alertaUltimo(){
+    var instrucao = `
+    SELECT * FROM alerta WHERE fkSensor = 1 LIMIT 1;
+    `
+    console.log('EXECUTANDO:',instrucao)
+    return database.executar(instrucao)
+}
 
 module.exports = {
     temperaturaAtual,
     ultimasDezTemperaturas,
     alerta,
-    alertasLista
+    alertasLista,
+    alertaUltimo
 };

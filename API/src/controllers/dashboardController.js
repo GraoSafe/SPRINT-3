@@ -42,6 +42,20 @@ function alertasLista(req,res){
                     }
                 );
 }
+function alertaUltimo(req,res){
+    dashboardModel.alertaUltimo()
+            .then(resultado => {
+                res.status(200).json(resultado)
+                console.log('ALERTA ENCONTRADO')
+                    }
+                ).catch(
+                    function (erro) {
+                        console.log(erro);
+                        console.log("\nHouve um erro ao listar alertas! Erro: ", erro.sqlMessage);
+                        res.status(500).json(erro.sqlMessage);
+                    }
+                );
+}
 function alerta(req,res){
     var tempAlerta = req.body.tempAlertaServer
     dashboardModel.alerta(tempAlerta)
@@ -58,5 +72,6 @@ module.exports = {
    temperaturaAtual,
    ultimasDezTemperaturas,
    alerta,
-   alertasLista
+   alertasLista,
+   alertaUltimo
 }
